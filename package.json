@@ -1,0 +1,48 @@
+{
+  "name": "serveJaWeb",
+  "displayName": "serveJa",
+  "version": "1.0.0",
+  "description": "serveJaWeb",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "devDependencies": {
+    "gulp": "^3.5.6",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^3.1.0"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "cloudinary": "^1.10.0",
+    "connect-multiparty": "^2.0.0",
+    "consign": "^0.1.5",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "express-jwt": "^5.3.0",
+    "file-stream-rotator": "^0.2.0",
+    "fs": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.1.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-wrap": "^0.13.0",
+    "method-override": "^2.3.9",
+    "moment": "^2.21.0",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.10.8",
+    "morgan": "^1.8.2",
+    "nodemailer": "^4.4.0",
+    "qr-image": "^3.2.0",
+    "socket.io": "^2.0.4",
+    "winston": "^2.4.0"
+  },
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0"
+}
