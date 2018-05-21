@@ -167,7 +167,7 @@ module.exports = function(app) {
 
     //region Response
     app.get('*', function(req, res) {
-        res.sendFile(appDir + '/www/index.html');
+        res.sendFile(appDir + '/public/dist/index.html');
     });
     //endregion
 };

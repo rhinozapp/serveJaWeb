@@ -1,0 +1,204 @@
+<h2 mat-dialog-title>Cadastrar-se</h2>
+<form [formGroup]="_myForm" (submit)="signUpAction(); false;">
+    <mat-dialog-content align="center">
+        <!--NAME-->
+        <mat-form-field>
+            <mat-label>Nome do Estabelecimento</mat-label>
+            <input matInput
+                   formControlName="placeName"
+                   [(ngModel)]="_place.namePlace"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.placeName"
+                   placeholder="Nome do estabelecimento">
+
+            <mat-error *ngIf="_myForm.controls.placeName.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--EMAIL-->
+        <mat-form-field>
+            <mat-label>E-mail</mat-label>
+            <input matInput
+                   formControlName="email"
+                   [(ngModel)]="_place.email"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.email"
+                   placeholder="Entre com seu e-mail">
+
+            <mat-error *ngIf="_myForm.controls.email.hasError('email')">
+                Digite um e-mail válido
+            </mat-error>
+            <mat-error *ngIf="_myForm.controls.email.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--PASSWORD-->
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input matInput
+                   formControlName="password"
+                   [(ngModel)]="_place.password"
+                   type="password"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.password"
+                   placeholder="Entre com sua senha">
+
+            <mat-error *ngIf="_myForm.controls.password.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--REPEAT PASSWORD-->
+        <mat-form-field>
+            <mat-label>Repetir Senha</mat-label>
+            <input matInput
+                   formControlName="repeatPassword"
+                   [(ngModel)]="_repeatPassword"
+                   type="password"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.repeatPassword"
+                   placeholder="Entre com sua senha">
+
+            <mat-error *ngIf="_myForm.controls.repeatPassword.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--CNPJ-->
+        <mat-form-field>
+            <mat-label>CNPJ</mat-label>
+            <input matInput
+                   formControlName="cnpj"
+                   [(ngModel)]="_place.cnpj"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.cnpj"
+                   placeholder="CNPJ">
+
+            <mat-error *ngIf="_myForm.controls.cnpj.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--CEP-->
+        <mat-form-field>
+            <mat-label>CEP</mat-label>
+            <input matInput
+                   formControlName="zipCode"
+                   [(ngModel)]="_place.zipCode"
+                   (change)="zipCodeChange()"
+
+                   [dropSpecialCharacters]="true"
+                   mask='00000-000'
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.zipCode"
+                   placeholder="CEP">
+
+            <mat-error *ngIf="_myForm.controls.zipCode.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+            <mat-error *ngIf="_myForm.controls.zipCode.hasError('invalid')">
+                CEP incorreto, digite um CEP válido
+            </mat-error>
+            <mat-error *ngIf="_myForm.controls.zipCode.hasError('minLength')">
+                CEP deve ter no Mínimo 8 caracteres
+            </mat-error>
+        </mat-form-field>
+
+        <!--STREET-->
+        <mat-form-field>
+            <mat-label>Rua</mat-label>
+            <input matInput
+                   formControlName="street"
+                   [(ngModel)]="_place.street"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.street"
+                   placeholder="Rua">
+
+            <mat-error *ngIf="_myForm.controls.street.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--NUMBER-->
+        <mat-form-field>
+            <mat-label>Nº</mat-label>
+            <input matInput
+                   [(ngModel)]="_place.number"
+
+                   [errorStateMatcher]="matcher"
+                   formControlName="number">
+        </mat-form-field>
+
+        <!--COMPLEMENT-->
+        <mat-form-field>
+            <mat-label>Complemento</mat-label>
+            <input matInput
+                   [(ngModel)]="_place.complement"
+
+                   [errorStateMatcher]="matcher"
+                   formControlName="complement">
+        </mat-form-field>
+
+        <!--NEIGHBORHOOD-->
+        <mat-form-field>
+            <mat-label>Bairro</mat-label>
+            <input matInput
+                   formControlName="neighborhood"
+                   [(ngModel)]="_place.neighborhood"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.neighborhood"
+                   placeholder="Bairro">
+
+            <mat-error *ngIf="_myForm.controls.neighborhood.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--CITY-->
+        <mat-form-field>
+            <mat-label>Cidade</mat-label>
+            <input matInput
+                   formControlName="city"
+                   [(ngModel)]="_place.city"
+
+                   [errorStateMatcher]="matcher"
+                   [formControl]="_myForm.controls.city"
+                   placeholder="Cidade">
+
+            <mat-error *ngIf="_myForm.controls.city.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <!--STATE-->
+        <mat-form-field>
+            <mat-label>UF</mat-label>
+            <mat-select [(ngModel)]="_place.state"
+
+                        [errorStateMatcher]="matcher"
+                        formControlName="state">
+                <mat-option *ngFor="let data of listState" [value]="data">
+                    {{data}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button
+                mat-dialog-close>Cancelar</button>
+        <button mat-button
+                [type]="submit"
+                [disabled]="_myForm.invalid">GO!</button>
+    </mat-dialog-actions>
+</form>

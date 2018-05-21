@@ -3,17 +3,8 @@
   "ignore": [
     ".git",
     "node_modules/*",
-    "bower_components/*",
-    "hooks/*",
     "log/*",
-    "OldRhinoz/*",
-    "platforms/*",
-    "plugins/*",
-    "res/*",
     ".sass-cache/*",
-    "srcApp/*",
-    "srcWeb/*",
-    "www/*",
     "public/*"
   ],
   "verbose": false
