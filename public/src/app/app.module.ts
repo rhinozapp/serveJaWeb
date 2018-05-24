@@ -17,7 +17,7 @@ import {
     MatOptionModule,
     MatSelectModule
 } from '@angular/material';
-import {LoginDialogComponent, MyToolbarComponent, SignUpDialogComponent} from './my-toolbar/my-toolbar.component';
+import {LoginDialogComponent, MyToolbarComponent, SignUpDialogComponent} from './components/my-toolbar/my-toolbar.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ApiServiceService} from "./services/api-service/api-service.service";
 import {PlaceService} from "./services/place/place.service";

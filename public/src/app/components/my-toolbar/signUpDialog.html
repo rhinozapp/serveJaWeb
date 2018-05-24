@@ -68,6 +68,9 @@
             <mat-error *ngIf="_myForm.controls.repeatPassword.hasError('required')">
                 Este campo é obrigatório
             </mat-error>
+            <mat-error *ngIf="_myForm.controls.repeatPassword.hasError('mismatchedPassword')">
+                Senhas diferente
+            </mat-error>
         </mat-form-field>
 
         <!--CNPJ-->

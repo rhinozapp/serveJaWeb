@@ -1,10 +1,10 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {MyErrorStateMatcher} from "../default.error-matcher";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {PlaceService} from "../services/place/place.service";
-import {Place, PlaceLoc} from "../models/place";
-import {HelpersService} from "../services/helpers/helpers.service";
+import {MyErrorStateMatcher} from "../../default.error-matcher";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {PlaceService} from "../../services/place/place.service";
+import {Place} from "../../models/place";
+import {HelpersService} from "../../services/helpers/helpers.service";
 
 @Component({
     selector: 'app-my-toolbar',
@@ -127,7 +127,6 @@ export class SignUpDialogComponent {
         formBuilder : FormBuilder,
         private _userService : PlaceService,
         private _helpers : HelpersService) {
-
         this._myForm = formBuilder.group({
             placeName : new FormControl('', [
                 Validators.required
@@ -140,7 +139,8 @@ export class SignUpDialogComponent {
                 Validators.required
             ]),
             repeatPassword : new FormControl('', [
-                Validators.required
+                Validators.required,
+                this.matchPassword
             ]),
             cnpj : new FormControl('', [
                 Validators.required
@@ -197,5 +197,13 @@ export class SignUpDialogComponent {
                     invalid : true
                 });
             });
+    }
+
+    matchPassword(input: AbstractControl) : { [key: string]: any }{
+        return !input.root || !(<FormGroup>input.root).controls ?
+            null :
+            input.value !== (<FormGroup>input.root).controls.password.value ?
+                {mismatchedPassword : true} :
+                null;
     }
 }
