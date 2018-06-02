@@ -9,3 +9,24 @@
 .mat-form-field{
     width: 100%;
 }
+
+
+.pac-container {
+    width: 100%;
+}
+
+.pac-icon{
+    display: none;
+}
+
+.pac-item{
+    border: none;
+}
+
+.pac-item:hover{}
+
+.pac-item-selected{}
+
+.pac-item-query{}
+
+.pac-matched{}

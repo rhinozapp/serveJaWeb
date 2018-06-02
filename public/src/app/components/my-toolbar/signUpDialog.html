@@ -1,6 +1,17 @@
 <h2 mat-dialog-title>Cadastrar-se</h2>
+
+<!--AUTOCOMPLETE-->
 <form [formGroup]="_myForm" (submit)="signUpAction(); false;">
     <mat-dialog-content align="center">
+        <!--SEARCH-->
+        <mat-form-field appearance="outline">
+            <mat-label>Pesquise um estabelicimento</mat-label>
+            <input matInput
+                   #search
+                   placeholder="Pesquise um estabelicimento">
+            <mat-icon matSuffix mat-icon-button (click)="search.value=''">close</mat-icon>
+        </mat-form-field>
+
         <!--NAME-->
         <mat-form-field>
             <mat-label>Nome do Estabelecimento</mat-label>
@@ -24,6 +35,8 @@
                    formControlName="email"
                    [(ngModel)]="_place.email"
 
+                   #email
+
                    [errorStateMatcher]="matcher"
                    [formControl]="_myForm.controls.email"
                    placeholder="Entre com seu e-mail">
@@ -42,14 +55,19 @@
             <input matInput
                    formControlName="password"
                    [(ngModel)]="_place.password"
-                   type="password"
+                   [type]="hide ? 'password' : 'text'"
 
                    [errorStateMatcher]="matcher"
                    [formControl]="_myForm.controls.password"
                    placeholder="Entre com sua senha">
 
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+
             <mat-error *ngIf="_myForm.controls.password.hasError('required')">
                 Este campo é obrigatório
+            </mat-error>
+            <mat-error *ngIf="_myForm.controls.password.hasError('minlength')">
+                Este campo deve ter no mínimo 8 caracteres
             </mat-error>
         </mat-form-field>
 
@@ -60,10 +78,13 @@
                    formControlName="repeatPassword"
                    [(ngModel)]="_repeatPassword"
                    type="password"
+                   [type]="hide2 ? 'password' : 'text'"
 
                    [errorStateMatcher]="matcher"
                    [formControl]="_myForm.controls.repeatPassword"
                    placeholder="Entre com sua senha">
+
+            <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>
 
             <mat-error *ngIf="_myForm.controls.repeatPassword.hasError('required')">
                 Este campo é obrigatório
@@ -80,12 +101,18 @@
                    formControlName="cnpj"
                    [(ngModel)]="_place.cnpj"
 
+                   [dropSpecialCharacters]="true"
+                   mask='00.000.000/0000-00'
+
                    [errorStateMatcher]="matcher"
                    [formControl]="_myForm.controls.cnpj"
                    placeholder="CNPJ">
 
             <mat-error *ngIf="_myForm.controls.cnpj.hasError('required')">
                 Este campo é obrigatório
+            </mat-error>
+            <mat-error *ngIf="_myForm.controls.cnpj.hasError('validCNPJ')">
+                CNPJ inválido
             </mat-error>
         </mat-form-field>
 

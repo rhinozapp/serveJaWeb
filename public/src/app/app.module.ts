@@ -24,6 +24,7 @@ import {PlaceService} from "./services/place/place.service";
 import {HttpClientModule} from "@angular/common/http";
 import {NgxMaskModule} from "ngx-mask";
 import {HelpersService} from "./services/helpers/helpers.service";
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,12 @@ import {HelpersService} from "./services/helpers/helpers.service";
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgxMaskModule.forRoot()
+        NgxMaskModule.forRoot(),
+        AgmCoreModule.forRoot({
+            libraries: ['geometry', 'places'],
+            language: 'pt',
+            apiKey : 'AIzaSyDrgnxO_sSTLTfGWcP1rI2XgOGBfk-4wV0'
+        })
     ],
     exports : [
         MatToolbarModule,

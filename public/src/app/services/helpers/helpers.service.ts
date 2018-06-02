@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {} from '@types/googlemaps';
 import {Observable} from "rxjs/Observable";
@@ -10,6 +10,9 @@ export class HelpersService {
 
     constructor(private _http : HttpClient) {}
 
+    /*
+    * Google Maps
+    * */
     geocode(latLng: google.maps.LatLng): Observable<google.maps.GeocoderResult[]> {
         return Observable.create((observer: Observer<google.maps.GeocoderResult[]>) => {
             // Invokes geocode method of Google Maps API geocoding.
@@ -59,6 +62,9 @@ export class HelpersService {
         });
     }
 
+    /*
+    * Via CEP
+    * */
     getAddressInfo(zipCode) : any {
         return this._http.get('https://viacep.com.br/ws/'+zipCode+'/json/');
     }

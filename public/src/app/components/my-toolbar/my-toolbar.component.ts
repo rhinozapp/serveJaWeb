@@ -1,10 +1,18 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+    Component,
+    ElementRef, EventEmitter,
+    Inject, Input, Output,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
 import {MyErrorStateMatcher} from "../../default.error-matcher";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PlaceService} from "../../services/place/place.service";
 import {Place} from "../../models/place";
 import {HelpersService} from "../../services/helpers/helpers.service";
+import {} from '@types/googlemaps';
+import {CnpjValidator} from "../../services/validators/cnpj.validator";
 
 @Component({
     selector: 'app-my-toolbar',
@@ -12,10 +20,8 @@ import {HelpersService} from "../../services/helpers/helpers.service";
     styleUrls: ['./my-toolbar.component.css'],
     encapsulation : ViewEncapsulation.None
 })
-export class MyToolbarComponent implements OnInit {
+export class MyToolbarComponent {
     constructor(private _dialog: MatDialog) {}
-
-    ngOnInit() {}
 
     openLoginDialog(): void {
         this._dialog.open(LoginDialogComponent, {
@@ -23,9 +29,7 @@ export class MyToolbarComponent implements OnInit {
             data: {},
             disableClose : true
         })
-            .afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
-        });
+            .afterClosed().subscribe(result => {});
     }
 
     openSignUpDialog(): void {
@@ -34,9 +38,7 @@ export class MyToolbarComponent implements OnInit {
             data: {},
             disableClose : true
         })
-            .afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
-        });
+            .afterClosed().subscribe(result => {});
     }
 }
 
@@ -83,10 +85,12 @@ export class LoginDialogComponent {
 @Component({
     selector: 'sign-up-dialog',
     templateUrl: 'signUpDialog.html',
+    styleUrls: ['./my-toolbar.component.css']
 })
 export class SignUpDialogComponent {
     matcher = new MyErrorStateMatcher();
 
+    @Output() public emit = new EventEmitter();
     private _place : Place = new Place();
     public listState : Array<string> = [
         'SP',
@@ -120,6 +124,14 @@ export class SignUpDialogComponent {
     private _repeatPassword : String;
     private _myForm : FormGroup;
     private _addressInfo : any;
+    public formBuilder : FormBuilder;
+
+    public hide : boolean = true;
+    public hide2 : boolean = true;
+
+    @ViewChild('search') public searchElementRef: ElementRef;
+    @ViewChild('email') public email: ElementRef;
+    private _autoComplete;
 
     constructor(
         public dialogRef: MatDialogRef<SignUpDialogComponent>,
@@ -136,14 +148,18 @@ export class SignUpDialogComponent {
                 Validators.email
             ]),
             password : new FormControl('', [
-                Validators.required
+                Validators.compose([
+                    Validators.required,
+                    Validators.minLength(8)
+                ])
             ]),
             repeatPassword : new FormControl('', [
                 Validators.required,
                 this.matchPassword
             ]),
             cnpj : new FormControl('', [
-                Validators.required
+                Validators.required,
+                CnpjValidator.validCNPJ
             ]),
             zipCode : new FormControl('', [
                 Validators.required,
@@ -164,6 +180,10 @@ export class SignUpDialogComponent {
         });
     }
 
+    ngOnInit() {
+        this.autoComplete();
+    }
+
     onNoClick(): void {
         this.dialogRef.close();
     }
@@ -182,7 +202,7 @@ export class SignUpDialogComponent {
                 this._helpers.getAddressInfo(this._place.zipCode)
                     .subscribe(value => {
                         this._place.street = value.logradouro;
-                        this._place.complement = value.complemento;
+                        /*this._place.complement = value.complemento;*/
                         this._place.neighborhood = value.bairro;
                         this._place.city = value.localidade;
                         this._place.state = value.uf;
@@ -205,5 +225,27 @@ export class SignUpDialogComponent {
             input.value !== (<FormGroup>input.root).controls.password.value ?
                 {mismatchedPassword : true} :
                 null;
+    }
+
+    autoComplete(){
+        this._autoComplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+            types: ['establishment'],
+            componentRestrictions: {
+                country: 'br'
+            }
+        });
+
+        this._autoComplete.addListener('place_changed', () => {
+            let place: google.maps.places.PlaceResult = this._autoComplete.getPlace();
+
+            this._place.namePlace = place.name;
+
+            place.address_components[place.address_components.length -1].long_name ?
+                (this._place.zipCode = place.address_components[place.address_components.length -1]
+                    .long_name
+                    .replace('-', ''), this.zipCodeChange()) : false;
+
+            this.email.nativeElement.focus();
+        });
     }
 }
