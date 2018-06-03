@@ -1,7 +1,7 @@
 import {
     Component,
-    ElementRef, EventEmitter,
-    Inject, Input, Output,
+    ElementRef,
+    Inject,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -13,6 +13,8 @@ import {Place} from "../../models/place";
 import {HelpersService} from "../../services/helpers/helpers.service";
 import {} from '@types/googlemaps';
 import {CnpjValidator} from "../../services/validators/cnpj.validator";
+import {forkJoin} from "rxjs/internal/observable/forkJoin";
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
     selector: 'app-my-toolbar',
@@ -57,7 +59,8 @@ export class LoginDialogComponent {
         public dialogRef: MatDialogRef<LoginDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         formBuilder : FormBuilder,
-        private _userService : PlaceService) {
+        private _placeService : PlaceService,
+        private _authService : AuthService) {
 
         this._myForm = formBuilder.group({
             email : new FormControl('', [
@@ -75,9 +78,7 @@ export class LoginDialogComponent {
     }
 
     loginAction(){
-        console.log(this._email, this._password);
-
-        this._userService.doLogin(this._email, this._password)
+        this._authService.doLogin(this._email, this._password)
             .subscribe(data => console.log(data));
     }
 }
@@ -90,7 +91,6 @@ export class LoginDialogComponent {
 export class SignUpDialogComponent {
     matcher = new MyErrorStateMatcher();
 
-    @Output() public emit = new EventEmitter();
     private _place : Place = new Place();
     public listState : Array<string> = [
         'SP',
@@ -131,14 +131,16 @@ export class SignUpDialogComponent {
 
     @ViewChild('search') public searchElementRef: ElementRef;
     @ViewChild('email') public email: ElementRef;
+    @ViewChild('cnpj') public cnpj: ElementRef;
     private _autoComplete;
 
     constructor(
         public dialogRef: MatDialogRef<SignUpDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         formBuilder : FormBuilder,
-        private _userService : PlaceService,
-        private _helpers : HelpersService) {
+        private _placeService : PlaceService,
+        private _helpers : HelpersService,
+        private _authService : AuthService) {
         this._myForm = formBuilder.group({
             placeName : new FormControl('', [
                 Validators.required
@@ -189,9 +191,35 @@ export class SignUpDialogComponent {
     }
 
     signUpAction(){
-        console.log(this._place);
-        /*this._userService.doSignUp()
-            .subscribe(data => console.log(data));*/
+        this.validateExistFields()
+            .subscribe((results : any) => {
+                !results[0].status ?
+                    (this._myForm.controls['cnpj'].setErrors({
+                        usedCNPJ : true
+                    }), this.cnpj.nativeElement.focus()) :
+
+                    !results[1].status ?
+                        (this._myForm.controls['email'].setErrors({
+                            usedEmail : true
+                        }), this.email.nativeElement.focus()) :
+
+                        this.signUpAfterValidation();
+
+            }, () => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'));
+    }
+
+    signUpAfterValidation(){
+        this._authService.doSignUp(this._place)
+            .subscribe(data => {
+                console.log(data);
+            })
+    }
+
+    validateExistFields(){
+        return forkJoin([
+            this._placeService.cnpjValidate(this._place.cnpj),
+            this._placeService.emailValidate(this._place.email)
+        ]);
     }
 
     zipCodeChange(){

@@ -47,6 +47,9 @@
             <mat-error *ngIf="_myForm.controls.email.hasError('required')">
                 Este campo é obrigatório
             </mat-error>
+            <mat-error *ngIf="_myForm.controls.email.hasError('usedEmail')">
+                Este e-mail já foi usado para outra conta
+            </mat-error>
         </mat-form-field>
 
         <!--PASSWORD-->
@@ -101,6 +104,8 @@
                    formControlName="cnpj"
                    [(ngModel)]="_place.cnpj"
 
+                   #cnpj
+
                    [dropSpecialCharacters]="true"
                    mask='00.000.000/0000-00'
 
@@ -113,6 +118,9 @@
             </mat-error>
             <mat-error *ngIf="_myForm.controls.cnpj.hasError('validCNPJ')">
                 CNPJ inválido
+            </mat-error>
+            <mat-error *ngIf="_myForm.controls.cnpj.hasError('usedCNPJ')">
+                Este CNPJ já foi usado para outra conta
             </mat-error>
         </mat-form-field>
 

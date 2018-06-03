@@ -1,12 +1,12 @@
 exports.doLogin = function(req, res) {
     let mongoose = require('mongoose'),
-        userModel = mongoose.model('userAdmin'),
+        place = mongoose.model('place'),
         bcrypt = require('bcrypt'),
         logger = require('../../../../logger'),
         jwt = require('jsonwebtoken'),
         token;
 
-    userModel.find({ email: req.body.username }, function(err, user) {
+    place.find({ email: req.body.email }, function(err, user) {
         if (err) {
             res.json({ status: false });
         } else if (user.length === 0) {

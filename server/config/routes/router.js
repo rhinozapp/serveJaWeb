@@ -15,14 +15,17 @@ module.exports = function(app) {
     //endregion
 
     //region SignUp / doLogin
-    let signUpWeb = require('./web/modules/login/signUp');
-    app.post('/web/signUp', signUpWeb.signup);
+    let doSignUpWeb = require('./web/modules/login/doSignUp');
+    app.post('/web/doSignUp', doSignUpWeb.doSignUp);
 
     let doLoginWeb = require('./web/modules/login/doLogin');
     app.post('/web/doLogin', doLoginWeb.doLogin);
 
-    let usernameValidationWeb = require('./web/modules/login/usernameValidation');
-    app.post('/web/usernameValidation', usernameValidationWeb.usernameValidation);
+    let emailValidationWeb = require('./web/modules/login/emailValidation');
+    app.post('/web/emailValidation', emailValidationWeb.emailValidation);
+
+    let cnpjValidationWeb = require('./web/modules/login/cnpjValidation');
+    app.post('/web/cnpjValidation', cnpjValidationWeb.cnpjValidation);
     //endregion
 
     //region Recovery Password

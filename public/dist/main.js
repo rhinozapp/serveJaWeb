@@ -107,12 +107,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_mask__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-mask */ "./node_modules/ngx-mask/esm5/ngx-mask.js");
 /* harmony import */ var _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/helpers/helpers.service */ "./src/app/services/helpers/helpers.service.ts");
 /* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./services/auth/auth.service */ "./src/app/services/auth/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -158,6 +160,7 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatInputModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSelectModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatOptionModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBarModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClientModule"],
@@ -178,6 +181,7 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatInputModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSelectModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatOptionModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBarModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
                 ngx_mask__WEBPACK_IMPORTED_MODULE_13__["NgxMaskModule"]
@@ -186,7 +190,13 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["ErrorStateMatcher"],
                 _services_api_service_api_service_service__WEBPACK_IMPORTED_MODULE_10__["ApiServiceService"],
                 _services_place_place_service__WEBPACK_IMPORTED_MODULE_11__["PlaceService"],
-                _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_14__["HelpersService"]
+                _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_14__["HelpersService"],
+                _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthService"],
+                {
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HTTP_INTERCEPTORS"],
+                    useClass: _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthInterceptor"],
+                    multi: true
+                }
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
         })
@@ -251,6 +261,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_place__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/place */ "./src/app/models/place.ts");
 /* harmony import */ var _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../services/helpers/helpers.service */ "./src/app/services/helpers/helpers.service.ts");
 /* harmony import */ var _services_validators_cnpj_validator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/validators/cnpj.validator */ "./src/app/services/validators/cnpj.validator.ts");
+/* harmony import */ var rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/internal/observable/forkJoin */ "./node_modules/rxjs/internal/observable/forkJoin.js");
+/* harmony import */ var rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/auth/auth.service */ "./src/app/services/auth/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -263,6 +276,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+
+
 
 
 
@@ -304,10 +319,11 @@ var MyToolbarComponent = /** @class */ (function () {
 }());
 
 var LoginDialogComponent = /** @class */ (function () {
-    function LoginDialogComponent(dialogRef, data, formBuilder, _userService) {
+    function LoginDialogComponent(dialogRef, data, formBuilder, _placeService, _authService) {
         this.dialogRef = dialogRef;
         this.data = data;
-        this._userService = _userService;
+        this._placeService = _placeService;
+        this._authService = _authService;
         this.matcher = new _default_error_matcher__WEBPACK_IMPORTED_MODULE_2__["MyErrorStateMatcher"]();
         this._myForm = formBuilder.group({
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
@@ -323,8 +339,7 @@ var LoginDialogComponent = /** @class */ (function () {
         this.dialogRef.close();
     };
     LoginDialogComponent.prototype.loginAction = function () {
-        console.log(this._email, this._password);
-        this._userService.doLogin(this._email, this._password)
+        this._authService.doLogin(this._email, this._password)
             .subscribe(function (data) { return console.log(data); });
     };
     LoginDialogComponent = __decorate([
@@ -334,19 +349,20 @@ var LoginDialogComponent = /** @class */ (function () {
         }),
         __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"])),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"], Object, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
-            _services_place_place_service__WEBPACK_IMPORTED_MODULE_4__["PlaceService"]])
+            _services_place_place_service__WEBPACK_IMPORTED_MODULE_4__["PlaceService"],
+            _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_9__["AuthService"]])
     ], LoginDialogComponent);
     return LoginDialogComponent;
 }());
 
 var SignUpDialogComponent = /** @class */ (function () {
-    function SignUpDialogComponent(dialogRef, data, formBuilder, _userService, _helpers) {
+    function SignUpDialogComponent(dialogRef, data, formBuilder, _placeService, _helpers, _authService) {
         this.dialogRef = dialogRef;
         this.data = data;
-        this._userService = _userService;
+        this._placeService = _placeService;
         this._helpers = _helpers;
+        this._authService = _authService;
         this.matcher = new _default_error_matcher__WEBPACK_IMPORTED_MODULE_2__["MyErrorStateMatcher"]();
-        this.emit = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this._place = new _models_place__WEBPACK_IMPORTED_MODULE_5__["Place"]();
         this.listState = [
             'SP',
@@ -426,9 +442,31 @@ var SignUpDialogComponent = /** @class */ (function () {
         this.dialogRef.close();
     };
     SignUpDialogComponent.prototype.signUpAction = function () {
-        console.log(this._place);
-        /*this._userService.doSignUp()
-            .subscribe(data => console.log(data));*/
+        var _this = this;
+        this.validateExistFields()
+            .subscribe(function (results) {
+            !results[0].status ?
+                (_this._myForm.controls['cnpj'].setErrors({
+                    usedCNPJ: true
+                }), _this.cnpj.nativeElement.focus()) :
+                !results[1].status ?
+                    (_this._myForm.controls['email'].setErrors({
+                        usedEmail: true
+                    }), _this.email.nativeElement.focus()) :
+                    _this.signUpAfterValidation();
+        }, function () { return _this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'); });
+    };
+    SignUpDialogComponent.prototype.signUpAfterValidation = function () {
+        this._authService.doSignUp(this._place)
+            .subscribe(function (data) {
+            console.log(data);
+        });
+    };
+    SignUpDialogComponent.prototype.validateExistFields = function () {
+        return Object(rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8__["forkJoin"])([
+            this._placeService.cnpjValidate(this._place.cnpj),
+            this._placeService.emailValidate(this._place.email)
+        ]);
     };
     SignUpDialogComponent.prototype.zipCodeChange = function () {
         var _this = this;
@@ -479,10 +517,6 @@ var SignUpDialogComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
-        __metadata("design:type", Object)
-    ], SignUpDialogComponent.prototype, "emit", void 0);
-    __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('search'),
         __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
     ], SignUpDialogComponent.prototype, "searchElementRef", void 0);
@@ -490,6 +524,10 @@ var SignUpDialogComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('email'),
         __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
     ], SignUpDialogComponent.prototype, "email", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('cnpj'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], SignUpDialogComponent.prototype, "cnpj", void 0);
     SignUpDialogComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'sign-up-dialog',
@@ -499,7 +537,8 @@ var SignUpDialogComponent = /** @class */ (function () {
         __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"])),
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"], Object, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
             _services_place_place_service__WEBPACK_IMPORTED_MODULE_4__["PlaceService"],
-            _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_6__["HelpersService"]])
+            _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_6__["HelpersService"],
+            _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_9__["AuthService"]])
     ], SignUpDialogComponent);
     return SignUpDialogComponent;
 }());
@@ -515,7 +554,7 @@ var SignUpDialogComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Cadastrar-se</h2>\n\n<!--AUTOCOMPLETE-->\n<form [formGroup]=\"_myForm\" (submit)=\"signUpAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <!--SEARCH-->\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Pesquise um estabelicimento</mat-label>\n            <input matInput\n                   #search\n                   placeholder=\"Pesquise um estabelicimento\">\n            <mat-icon matSuffix mat-icon-button (click)=\"search.value=''\">close</mat-icon>\n        </mat-form-field>\n\n        <!--NAME-->\n        <mat-form-field>\n            <mat-label>Nome do Estabelecimento</mat-label>\n            <input matInput\n                   formControlName=\"placeName\"\n                   [(ngModel)]=\"_place.namePlace\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.placeName\"\n                   placeholder=\"Nome do estabelecimento\">\n\n            <mat-error *ngIf=\"_myForm.controls.placeName.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--EMAIL-->\n        <mat-form-field>\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   formControlName=\"email\"\n                   [(ngModel)]=\"_place.email\"\n\n                   #email\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.email\"\n                   placeholder=\"Entre com seu e-mail\">\n\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--PASSWORD-->\n        <mat-form-field>\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   formControlName=\"password\"\n                   [(ngModel)]=\"_place.password\"\n                   [type]=\"hide ? 'password' : 'text'\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n\n            <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('minlength')\">\n                Este campo deve ter no mínimo 8 caracteres\n            </mat-error>\n        </mat-form-field>\n\n        <!--REPEAT PASSWORD-->\n        <mat-form-field>\n            <mat-label>Repetir Senha</mat-label>\n            <input matInput\n                   formControlName=\"repeatPassword\"\n                   [(ngModel)]=\"_repeatPassword\"\n                   type=\"password\"\n                   [type]=\"hide2 ? 'password' : 'text'\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.repeatPassword\"\n                   placeholder=\"Entre com sua senha\">\n\n            <mat-icon matSuffix (click)=\"hide2 = !hide2\">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.repeatPassword.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.repeatPassword.hasError('mismatchedPassword')\">\n                Senhas diferente\n            </mat-error>\n        </mat-form-field>\n\n        <!--CNPJ-->\n        <mat-form-field>\n            <mat-label>CNPJ</mat-label>\n            <input matInput\n                   formControlName=\"cnpj\"\n                   [(ngModel)]=\"_place.cnpj\"\n\n                   [dropSpecialCharacters]=\"true\"\n                   mask='00.000.000/0000-00'\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.cnpj\"\n                   placeholder=\"CNPJ\">\n\n            <mat-error *ngIf=\"_myForm.controls.cnpj.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.cnpj.hasError('validCNPJ')\">\n                CNPJ inválido\n            </mat-error>\n        </mat-form-field>\n\n        <!--CEP-->\n        <mat-form-field>\n            <mat-label>CEP</mat-label>\n            <input matInput\n                   formControlName=\"zipCode\"\n                   [(ngModel)]=\"_place.zipCode\"\n                   (change)=\"zipCodeChange()\"\n\n                   [dropSpecialCharacters]=\"true\"\n                   mask='00000-000'\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.zipCode\"\n                   placeholder=\"CEP\">\n\n            <mat-error *ngIf=\"_myForm.controls.zipCode.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.zipCode.hasError('invalid')\">\n                CEP incorreto, digite um CEP válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.zipCode.hasError('minLength')\">\n                CEP deve ter no Mínimo 8 caracteres\n            </mat-error>\n        </mat-form-field>\n\n        <!--STREET-->\n        <mat-form-field>\n            <mat-label>Rua</mat-label>\n            <input matInput\n                   formControlName=\"street\"\n                   [(ngModel)]=\"_place.street\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.street\"\n                   placeholder=\"Rua\">\n\n            <mat-error *ngIf=\"_myForm.controls.street.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--NUMBER-->\n        <mat-form-field>\n            <mat-label>Nº</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_place.number\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"number\">\n        </mat-form-field>\n\n        <!--COMPLEMENT-->\n        <mat-form-field>\n            <mat-label>Complemento</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_place.complement\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"complement\">\n        </mat-form-field>\n\n        <!--NEIGHBORHOOD-->\n        <mat-form-field>\n            <mat-label>Bairro</mat-label>\n            <input matInput\n                   formControlName=\"neighborhood\"\n                   [(ngModel)]=\"_place.neighborhood\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.neighborhood\"\n                   placeholder=\"Bairro\">\n\n            <mat-error *ngIf=\"_myForm.controls.neighborhood.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--CITY-->\n        <mat-form-field>\n            <mat-label>Cidade</mat-label>\n            <input matInput\n                   formControlName=\"city\"\n                   [(ngModel)]=\"_place.city\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.city\"\n                   placeholder=\"Cidade\">\n\n            <mat-error *ngIf=\"_myForm.controls.city.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--STATE-->\n        <mat-form-field>\n            <mat-label>UF</mat-label>\n            <mat-select [(ngModel)]=\"_place.state\"\n\n                        [errorStateMatcher]=\"matcher\"\n                        formControlName=\"state\">\n                <mat-option *ngFor=\"let data of listState\" [value]=\"data\">\n                    {{data}}\n                </mat-option>\n            </mat-select>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"end\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n"
+module.exports = "<h2 mat-dialog-title>Cadastrar-se</h2>\n\n<!--AUTOCOMPLETE-->\n<form [formGroup]=\"_myForm\" (submit)=\"signUpAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <!--SEARCH-->\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Pesquise um estabelicimento</mat-label>\n            <input matInput\n                   #search\n                   placeholder=\"Pesquise um estabelicimento\">\n            <mat-icon matSuffix mat-icon-button (click)=\"search.value=''\">close</mat-icon>\n        </mat-form-field>\n\n        <!--NAME-->\n        <mat-form-field>\n            <mat-label>Nome do Estabelecimento</mat-label>\n            <input matInput\n                   formControlName=\"placeName\"\n                   [(ngModel)]=\"_place.namePlace\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.placeName\"\n                   placeholder=\"Nome do estabelecimento\">\n\n            <mat-error *ngIf=\"_myForm.controls.placeName.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--EMAIL-->\n        <mat-form-field>\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   formControlName=\"email\"\n                   [(ngModel)]=\"_place.email\"\n\n                   #email\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.email\"\n                   placeholder=\"Entre com seu e-mail\">\n\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('usedEmail')\">\n                Este e-mail já foi usado para outra conta\n            </mat-error>\n        </mat-form-field>\n\n        <!--PASSWORD-->\n        <mat-form-field>\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   formControlName=\"password\"\n                   [(ngModel)]=\"_place.password\"\n                   [type]=\"hide ? 'password' : 'text'\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n\n            <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('minlength')\">\n                Este campo deve ter no mínimo 8 caracteres\n            </mat-error>\n        </mat-form-field>\n\n        <!--REPEAT PASSWORD-->\n        <mat-form-field>\n            <mat-label>Repetir Senha</mat-label>\n            <input matInput\n                   formControlName=\"repeatPassword\"\n                   [(ngModel)]=\"_repeatPassword\"\n                   type=\"password\"\n                   [type]=\"hide2 ? 'password' : 'text'\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.repeatPassword\"\n                   placeholder=\"Entre com sua senha\">\n\n            <mat-icon matSuffix (click)=\"hide2 = !hide2\">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.repeatPassword.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.repeatPassword.hasError('mismatchedPassword')\">\n                Senhas diferente\n            </mat-error>\n        </mat-form-field>\n\n        <!--CNPJ-->\n        <mat-form-field>\n            <mat-label>CNPJ</mat-label>\n            <input matInput\n                   formControlName=\"cnpj\"\n                   [(ngModel)]=\"_place.cnpj\"\n\n                   #cnpj\n\n                   [dropSpecialCharacters]=\"true\"\n                   mask='00.000.000/0000-00'\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.cnpj\"\n                   placeholder=\"CNPJ\">\n\n            <mat-error *ngIf=\"_myForm.controls.cnpj.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.cnpj.hasError('validCNPJ')\">\n                CNPJ inválido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.cnpj.hasError('usedCNPJ')\">\n                Este CNPJ já foi usado para outra conta\n            </mat-error>\n        </mat-form-field>\n\n        <!--CEP-->\n        <mat-form-field>\n            <mat-label>CEP</mat-label>\n            <input matInput\n                   formControlName=\"zipCode\"\n                   [(ngModel)]=\"_place.zipCode\"\n                   (change)=\"zipCodeChange()\"\n\n                   [dropSpecialCharacters]=\"true\"\n                   mask='00000-000'\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.zipCode\"\n                   placeholder=\"CEP\">\n\n            <mat-error *ngIf=\"_myForm.controls.zipCode.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.zipCode.hasError('invalid')\">\n                CEP incorreto, digite um CEP válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.zipCode.hasError('minLength')\">\n                CEP deve ter no Mínimo 8 caracteres\n            </mat-error>\n        </mat-form-field>\n\n        <!--STREET-->\n        <mat-form-field>\n            <mat-label>Rua</mat-label>\n            <input matInput\n                   formControlName=\"street\"\n                   [(ngModel)]=\"_place.street\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.street\"\n                   placeholder=\"Rua\">\n\n            <mat-error *ngIf=\"_myForm.controls.street.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--NUMBER-->\n        <mat-form-field>\n            <mat-label>Nº</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_place.number\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"number\">\n        </mat-form-field>\n\n        <!--COMPLEMENT-->\n        <mat-form-field>\n            <mat-label>Complemento</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_place.complement\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"complement\">\n        </mat-form-field>\n\n        <!--NEIGHBORHOOD-->\n        <mat-form-field>\n            <mat-label>Bairro</mat-label>\n            <input matInput\n                   formControlName=\"neighborhood\"\n                   [(ngModel)]=\"_place.neighborhood\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.neighborhood\"\n                   placeholder=\"Bairro\">\n\n            <mat-error *ngIf=\"_myForm.controls.neighborhood.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--CITY-->\n        <mat-form-field>\n            <mat-label>Cidade</mat-label>\n            <input matInput\n                   formControlName=\"city\"\n                   [(ngModel)]=\"_place.city\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   [formControl]=\"_myForm.controls.city\"\n                   placeholder=\"Cidade\">\n\n            <mat-error *ngIf=\"_myForm.controls.city.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <!--STATE-->\n        <mat-form-field>\n            <mat-label>UF</mat-label>\n            <mat-select [(ngModel)]=\"_place.state\"\n\n                        [errorStateMatcher]=\"matcher\"\n                        formControlName=\"state\">\n                <mat-option *ngFor=\"let data of listState\" [value]=\"data\">\n                    {{data}}\n                </mat-option>\n            </mat-select>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"end\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n"
 
 /***/ }),
 
@@ -623,6 +662,89 @@ var ApiServiceService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/auth/auth.service.ts":
+/*!***********************************************!*\
+  !*** ./src/app/services/auth/auth.service.ts ***!
+  \***********************************************/
+/*! exports provided: AuthService, AuthInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthInterceptor", function() { return AuthInterceptor; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _api_service_api_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api-service/api-service.service */ "./src/app/services/api-service/api-service.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _helpers_helpers_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/helpers.service */ "./src/app/services/helpers/helpers.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AuthService = /** @class */ (function () {
+    function AuthService(_apiService, _http, _helpers) {
+        this._apiService = _apiService;
+        this._http = _http;
+        this._helpers = _helpers;
+    }
+    AuthService.prototype.doLogin = function (email, password) {
+        var _this = this;
+        return this._http
+            .post(this._apiService.url + 'web/doLogin', { email: email, password: password })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (req) { return _this.setSession(req); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function () { return _this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'); }));
+    };
+    AuthService.prototype.doSignUp = function (place) {
+        var _this = this;
+        return this._http
+            .post(this._apiService.url + 'web/doSignUp', { place: place })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (req) { return _this.setSession(req); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function () { return _this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'); }));
+    };
+    AuthService.prototype.setSession = function (authResult) {
+        localStorage.setItem('token', authResult.token);
+    };
+    AuthService.prototype.logout = function () {
+        localStorage.removeItem('token');
+    };
+    AuthService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_api_service_api_service_service__WEBPACK_IMPORTED_MODULE_2__["ApiServiceService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _helpers_helpers_service__WEBPACK_IMPORTED_MODULE_4__["HelpersService"]])
+    ], AuthService);
+    return AuthService;
+}());
+
+var AuthInterceptor = /** @class */ (function () {
+    function AuthInterceptor() {
+    }
+    AuthInterceptor.prototype.intercept = function (req, next) {
+        return localStorage.getItem('token') ?
+            next.handle(req.clone({
+                headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+            })) :
+            next.handle(req);
+    };
+    AuthInterceptor = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])()
+    ], AuthInterceptor);
+    return AuthInterceptor;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/helpers/helpers.service.ts":
 /*!*****************************************************!*\
   !*** ./src/app/services/helpers/helpers.service.ts ***!
@@ -636,6 +758,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm5/Observable.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -648,9 +771,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var HelpersService = /** @class */ (function () {
-    function HelpersService(_http) {
+    function HelpersService(_http, snackBar) {
         this._http = _http;
+        this.snackBar = snackBar;
         this.geocoder = new google.maps.Geocoder();
     }
     /*
@@ -705,9 +830,18 @@ var HelpersService = /** @class */ (function () {
     HelpersService.prototype.getAddressInfo = function (zipCode) {
         return this._http.get('https://viacep.com.br/ws/' + zipCode + '/json/');
     };
+    /*
+    * Snack Bar
+    * */
+    HelpersService.prototype.openSnackBar = function (content, action) {
+        this.snackBar.open(content, action, {
+            duration: 2000
+        });
+    };
     HelpersService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]])
     ], HelpersService);
     return HelpersService;
 }());
@@ -746,13 +880,13 @@ var PlaceService = /** @class */ (function () {
         this._apiService = _apiService;
         this._http = _http;
     }
-    PlaceService.prototype.doLogin = function (email, password) {
+    PlaceService.prototype.cnpjValidate = function (cnpj) {
         return this._http
-            .post(this._apiService.url + 'web/doLogin', { email: email, password: password });
+            .post(this._apiService.url + 'web/cnpjValidation', { cnpj: cnpj });
     };
-    PlaceService.prototype.doSignUp = function () {
+    PlaceService.prototype.emailValidate = function (email) {
         return this._http
-            .post(this._apiService.url + 'web/doSignUp', {});
+            .post(this._apiService.url + 'web/emailValidation', { email: email });
     };
     PlaceService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),

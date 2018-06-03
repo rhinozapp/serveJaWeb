@@ -3,12 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {} from '@types/googlemaps';
 import {Observable} from "rxjs/Observable";
 import {Observer} from "rxjs/Observer";
+import {MatSnackBar} from "@angular/material";
 
 @Injectable()
 export class HelpersService {
     geocoder: google.maps.Geocoder = new google.maps.Geocoder();
 
-    constructor(private _http : HttpClient) {}
+    constructor(private _http : HttpClient,
+                public snackBar: MatSnackBar) {}
 
     /*
     * Google Maps
@@ -68,4 +70,15 @@ export class HelpersService {
     getAddressInfo(zipCode) : any {
         return this._http.get('https://viacep.com.br/ws/'+zipCode+'/json/');
     }
+
+    /*
+    * Snack Bar
+    * */
+    openSnackBar(content : string, action: string) {
+        this.snackBar.open(content, action, {
+            duration: 2000
+        });
+    }
 }
+
+
