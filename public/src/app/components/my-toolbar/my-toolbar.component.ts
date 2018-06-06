@@ -1,7 +1,7 @@
 import {
     Component,
     ElementRef,
-    Inject,
+    Inject, NgZone,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -15,6 +15,8 @@ import {} from '@types/googlemaps';
 import {CnpjValidator} from "../../services/validators/cnpj.validator";
 import {forkJoin} from "rxjs/internal/observable/forkJoin";
 import {AuthService} from "../../services/auth/auth.service";
+import {Router} from "@angular/router";
+import {ProfileComponent} from "../profile/profile.component";
 
 @Component({
     selector: 'app-my-toolbar',
@@ -23,7 +25,8 @@ import {AuthService} from "../../services/auth/auth.service";
     encapsulation : ViewEncapsulation.None
 })
 export class MyToolbarComponent {
-    constructor(private _dialog: MatDialog) {}
+    constructor(private _dialog: MatDialog,
+                private _authService : AuthService) {}
 
     openLoginDialog(): void {
         this._dialog.open(LoginDialogComponent, {
@@ -60,7 +63,9 @@ export class LoginDialogComponent {
         @Inject(MAT_DIALOG_DATA) public data: any,
         formBuilder : FormBuilder,
         private _placeService : PlaceService,
-        private _authService : AuthService) {
+        private _authService : AuthService,
+        private _router : Router,
+        private _ngZone : NgZone) {
 
         this._myForm = formBuilder.group({
             email : new FormControl('', [
@@ -79,7 +84,9 @@ export class LoginDialogComponent {
 
     loginAction(){
         this._authService.doLogin(this._email, this._password)
-            .subscribe(data => console.log(data));
+            .subscribe(() => {
+                this.onNoClick();
+            });
     }
 }
 

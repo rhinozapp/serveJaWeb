@@ -25,14 +25,20 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {NgxMaskModule} from "ngx-mask";
 import {HelpersService} from "./services/helpers/helpers.service";
 import { AgmCoreModule } from '@agm/core';
-import {AuthInterceptor, AuthService} from "./services/auth/auth.service";
+import {AuthGuard, AuthInterceptor, AuthService} from "./services/auth/auth.service";
+import {JwtModule} from "@auth0/angular-jwt";
+import { AppRoutingModule } from './/app-routing.module';
+import {ProfileComponent} from "./components/profile/profile.component";
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MyToolbarComponent,
         LoginDialogComponent,
-        SignUpDialogComponent
+        SignUpDialogComponent,
+        ProfileComponent,
+        HomeComponent
     ],
     entryComponents : [
         LoginDialogComponent,
@@ -61,7 +67,11 @@ import {AuthInterceptor, AuthService} from "./services/auth/auth.service";
             libraries: ['geometry', 'places'],
             language: 'pt',
             apiKey : 'AIzaSyDrgnxO_sSTLTfGWcP1rI2XgOGBfk-4wV0'
-        })
+        }),
+        JwtModule.forRoot({
+            config : { tokenGetter : () => localStorage.getItem('token') }
+        }),
+        AppRoutingModule
     ],
     exports : [
         MatToolbarModule,
@@ -84,6 +94,7 @@ import {AuthInterceptor, AuthService} from "./services/auth/auth.service";
         PlaceService,
         HelpersService,
         AuthService,
+        AuthGuard,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

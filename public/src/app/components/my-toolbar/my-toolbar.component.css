@@ -1,32 +1,161 @@
+/*Variable*/
+/*Google*/
 .my-toolbar-icon {
-    padding: 0 14px;
-}
+  padding: 0 14px; }
 
 .my-toolbar-spacer {
-    flex: 1 1 auto;
-}
+  flex: 1 1 auto; }
 
-.mat-form-field{
-    width: 100%;
-}
+.mat-form-field {
+  width: 100%; }
 
-
+/*Google*/
 .pac-container {
-    width: 100%;
-}
+  width: 100%; }
 
-.pac-icon{
-    display: none;
-}
+.pac-icon {
+  display: none; }
 
-.pac-item{
-    border: none;
-}
+.pac-item {
+  border: none; }
 
-.pac-item:hover{}
+/*home*/
+.welcome {
+  position: relative; }
+  .welcome .welcome__video {
+    width: 100%; }
+    @media (max-width: 980px) {
+      .welcome .welcome__video {
+        display: none; } }
+  .welcome .welcom__bg-mobile {
+    position: relative;
+    display: block;
+    background: url(/assets/img/index-welcome-bg.jpg) no-repeat;
+    background-size: cover; }
+    @media (max-width: 980px) {
+      .welcome .welcom__bg-mobile {
+        display: block; } }
+    .welcome .welcom__bg-mobile .welcome__msg {
+      font-size: 4em;
+      color: #fff;
+      display: block;
+      text-align: center;
+      position: absolute;
+      text-shadow: 1px 1px 1px #000;
+      right: 0;
+      left: 0;
+      margin: auto;
+      -webkit-animation: text-appears 3s ease-in-out;
+      animation: text-appears 3s ease-in-out; }
+      @media (min-width: 980px) {
+        .welcome .welcom__bg-mobile .welcome__msg {
+          bottom: 190px; } }
+      @media (max-width: 980px) {
+        .welcome .welcom__bg-mobile .welcome__msg {
+          font-size: 2em;
+          position: relative;
+          padding: 40% 0 30% 0; } }
+      @media (min-width: 1125px) {
+        .welcome .welcom__bg-mobile .welcome__msg {
+          bottom: 280px; } }
+      @media (min-width: 1200px) {
+        .welcome .welcom__bg-mobile .welcome__msg {
+          bottom: 320px; } }
 
-.pac-item-selected{}
+.who-are-we {
+  padding: 20px 0;
+  clear: both; }
+  @media (max-width: 980px) {
+    .who-are-we {
+      text-align: center; } }
+  .who-are-we:nth-of-type(2) {
+    overflow: hidden; }
+  .who-are-we:nth-of-type(3) {
+    margin-top: 70px;
+    background: #eee; }
+    @media (max-width: 980px) {
+      .who-are-we:nth-of-type(3) {
+        margin-top: 0; } }
+    .who-are-we:nth-of-type(3) .who-are-we__article {
+      width: 65%;
+      margin-bottom: 20px; }
+      @media (max-width: 980px) {
+        .who-are-we:nth-of-type(3) .who-are-we__article {
+          width: 100%; } }
+    .who-are-we:nth-of-type(3) .who-are-we__img-app {
+      position: absolute;
+      width: 30%;
+      max-width: 319px;
+      box-shadow: 5px 5px 130px #aaa;
+      right: 0;
+      top: -65px; }
+      @media (max-width: 980px) {
+        .who-are-we:nth-of-type(3) .who-are-we__img-app {
+          position: relative;
+          width: 100%;
+          top: 0;
+          margin-bottom: 30px; } }
+  .who-are-we .who-are-we__reasons {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 70px; }
+    .who-are-we .who-are-we__reasons .who-are-we__reason {
+      width: 250px;
+      float: left;
+      margin-right: 110px; }
+      @media (max-width: 980px) {
+        .who-are-we .who-are-we__reasons .who-are-we__reason {
+          display: block;
+          width: 100%;
+          margin-bottom: 50px; } }
+      .who-are-we .who-are-we__reasons .who-are-we__reason:nth-child(3) {
+        margin-right: 0; }
+      .who-are-we .who-are-we__reasons .who-are-we__reason .who-are-we__icon {
+        font-size: 6em;
+        color: #ffbb00; }
+      .who-are-we .who-are-we__reasons .who-are-we__reason .who-are-we__reason-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 15px 0; }
+      .who-are-we .who-are-we__reasons .who-are-we__reason .who-are-we__reason-parag {
+        line-height: 25px; }
+  .who-are-we .who-are-we__title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold; }
+  .who-are-we .who-are-we__parag {
+    font-size: 1.2em;
+    line-height: 25px;
+    text-align: justify; }
+  .who-are-we .who-are-we__store {
+    display: inline-block;
+    margin-right: 10px; }
+    .who-are-we .who-are-we__store .who-are-we__img-store {
+      width: 175px; }
 
-.pac-item-query{}
+.contact {
+  margin-top: 35px;
+  padding: 20px 0; }
+  .contact .contact__title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold; }
+  .contact .footer__span {
+    font-size: 1.2em; }
 
-.pac-matched{}
+@-webkit-keyframes text-appears {
+  0% {
+    left: -200px;
+    opacity: 0; }
+  100% {
+    left: 0px;
+    opacity: 1; } }
+@keyframes text-appears {
+  0% {
+    left: -200px;
+    opacity: 0; }
+  100% {
+    left: 0px;
+    opacity: 1; } }
+
+/*# sourceMappingURL=my-toolbar.component.css.map */

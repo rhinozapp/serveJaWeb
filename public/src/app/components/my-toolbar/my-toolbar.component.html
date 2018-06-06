@@ -1,8 +1,16 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row *ngIf="!_authService.loggedIn()">
         <span>ServeJá</span>
         <span class="my-toolbar-spacer"></span>
         <button mat-button (click)="openSignUpDialog()">CADASTRE-SE</button>
         <button mat-button (click)="openLoginDialog()">ENTRAR</button>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row *ngIf="_authService.loggedIn()">
+        <span>ServeJá</span>
+        <span class="my-toolbar-spacer"></span>
+        <button mat-button>PERFIL</button>
+        <button mat-button>PRODUTOS</button>
+        <button mat-button (click)="_authService.logout()">SAIR</button>
     </mat-toolbar-row>
 </mat-toolbar>
