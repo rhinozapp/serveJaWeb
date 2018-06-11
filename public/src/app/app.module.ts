@@ -15,7 +15,7 @@ import {
     MatInputModule,
     ErrorStateMatcher,
     MatOptionModule,
-    MatSelectModule, MatSnackBarModule
+    MatSelectModule, MatSnackBarModule, MatMenuModule, MatGridListModule
 } from '@angular/material';
 import {LoginDialogComponent, MyToolbarComponent, SignUpDialogComponent} from './components/my-toolbar/my-toolbar.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -30,6 +30,11 @@ import {JwtModule} from "@auth0/angular-jwt";
 import { AppRoutingModule } from './/app-routing.module';
 import {ProfileComponent} from "./components/profile/profile.component";
 import { HomeComponent } from './components/home/home.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TableComponent } from './components/table/table.component';
+import { WaiterComponent } from './components/waiter/waiter.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +43,12 @@ import { HomeComponent } from './components/home/home.component';
         LoginDialogComponent,
         SignUpDialogComponent,
         ProfileComponent,
-        HomeComponent
+        HomeComponent,
+        MenuComponent,
+        DashboardComponent,
+        TableComponent,
+        WaiterComponent,
+        OrderComponent
     ],
     entryComponents : [
         LoginDialogComponent,
@@ -59,6 +69,8 @@ import { HomeComponent } from './components/home/home.component';
         MatSelectModule,
         MatOptionModule,
         MatSnackBarModule,
+        MatMenuModule,
+        MatGridListModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -73,21 +85,7 @@ import { HomeComponent } from './components/home/home.component';
         }),
         AppRoutingModule
     ],
-    exports : [
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatDialogModule,
-        MatInputModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatSnackBarModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgxMaskModule
-    ],
+    exports : [],
     providers: [
         ErrorStateMatcher,
         ApiServiceService,

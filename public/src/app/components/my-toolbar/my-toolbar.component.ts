@@ -66,7 +66,6 @@ export class LoginDialogComponent {
         private _authService : AuthService,
         private _router : Router,
         private _ngZone : NgZone) {
-
         this._myForm = formBuilder.group({
             email : new FormControl('', [
                 Validators.required,
@@ -84,8 +83,8 @@ export class LoginDialogComponent {
 
     loginAction(){
         this._authService.doLogin(this._email, this._password)
-            .subscribe(() => {
-                this.onNoClick();
+            .subscribe((data : any) => {
+                data.status ? this.onNoClick() : false;
             });
     }
 }
@@ -218,7 +217,7 @@ export class SignUpDialogComponent {
     signUpAfterValidation(){
         this._authService.doSignUp(this._place)
             .subscribe(data => {
-                console.log(data);
+                data.status ? this.onNoClick() : false;
             })
     }
 

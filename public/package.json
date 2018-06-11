@@ -28,6 +28,7 @@
     "@auth0/angular-jwt": "^2.0.0",
     "@types/googlemaps": "^3.30.8",
     "core-js": "^2.5.4",
+    "ember-cli-cors": "0.0.2",
     "ngx-mask": "^2.7.3",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",

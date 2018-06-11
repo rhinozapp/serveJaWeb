@@ -7,6 +7,7 @@ import {catchError, tap} from "rxjs/operators";
 import {HelpersService} from "../helpers/helpers.service";
 import {CanActivate, Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {throwError} from "rxjs/internal/observable/throwError";
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,11 @@ export class AuthService {
         return this._http
             .post(this._apiService.url + 'web/doLogin', {email, password})
             .pipe(
-                tap(req => this.setSession(req)),
+                tap((data : any) => {
+                    data.status ?
+                        this.setSession(data) :
+                        throwError(this._helpers.openSnackBar(data.message, 'OK'));
+                }),
                 catchError(() : any => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'))
             );
     }
@@ -29,14 +34,18 @@ export class AuthService {
         return this._http
             .post(this._apiService.url + 'web/doSignUp', {place})
             .pipe(
-                tap(req => this.setSession(req)),
+                tap((data : any) => {
+                    data.status ?
+                        this.setSession(data) :
+                        throwError(this._helpers.openSnackBar(data.message, 'OK'));
+                }),
                 catchError(() : any => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'))
             );
     }
 
     setSession(authResult) : void{
         localStorage.setItem('token', authResult.token);
-        this._router.navigate(['/profile']);
+        this._router.navigate(['/dashboard']);
     }
 
     loggedIn(){

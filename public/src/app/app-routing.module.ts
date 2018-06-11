@@ -4,11 +4,21 @@ import {RouterModule, Routes} from "@angular/router";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {HomeComponent} from "./components/home/home.component";
 import {AuthGuard} from "./services/auth/auth.service";
+import {MenuComponent} from "./components/menu/menu.component";
+import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {WaiterComponent} from "./components/waiter/waiter.component";
+import {TableComponent} from "./components/table/table.component";
+import {OrderComponent} from "./components/order/order.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
-    { path : 'profile', component : ProfileComponent, canActivate: [AuthGuard]},
+    { path: 'profile', component : ProfileComponent, canActivate: [AuthGuard]},
+    { path: 'menu', component : MenuComponent, canActivate: [AuthGuard]},
+    { path: 'dashboard', component : DashboardComponent, canActivate: [AuthGuard]},
+    { path: 'waiter', component : WaiterComponent, canActivate: [AuthGuard]},
+    { path: 'table', component : TableComponent, canActivate: [AuthGuard]},
+    { path: 'order', component : OrderComponent, canActivate: [AuthGuard]},
     { path: '**', redirectTo: '/home' }
 ];
 

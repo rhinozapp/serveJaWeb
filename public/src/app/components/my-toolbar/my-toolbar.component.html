@@ -6,11 +6,76 @@
         <button mat-button (click)="openLoginDialog()">ENTRAR</button>
     </mat-toolbar-row>
 
-    <mat-toolbar-row *ngIf="_authService.loggedIn()">
+    <mat-toolbar-row class="menuHorizontal" *ngIf="_authService.loggedIn()">
         <span>ServeJá</span>
         <span class="my-toolbar-spacer"></span>
-        <button mat-button>PERFIL</button>
-        <button mat-button>PRODUTOS</button>
-        <button mat-button (click)="_authService.logout()">SAIR</button>
+
+        <button mat-button routerLink="/dashboard">
+            <mat-icon aria-label="home">home</mat-icon>
+            HOME
+        </button>
+        <button mat-button routerLink="/order">
+            <mat-icon aria-label="home">reorder</mat-icon>
+            PEDIDOS
+        </button>
+        <button mat-button routerLink="/menu">
+            <mat-icon aria-label="home">restaurant_menu</mat-icon>
+            CARDÁPIOS
+        </button>
+        <button mat-button routerLink="/waiter">
+            <mat-icon aria-label="home">fastfood</mat-icon>
+            GARÇONS
+        </button>
+        <button mat-button routerLink="/table">
+            <mat-icon aria-label="home">table_chart</mat-icon>
+            MESAS
+        </button>
+        <button mat-button routerLink="/profile">
+            <mat-icon aria-label="home">person</mat-icon>
+            PERFIL
+        </button>
+        <button mat-button (click)="_authService.logout()">
+            <mat-icon aria-label="home">power_settings_new</mat-icon>
+            SAIR
+        </button>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row class="menuVertical" *ngIf="_authService.loggedIn()">
+        <span>ServeJá</span>
+        <span class="my-toolbar-spacer"></span>
+
+        <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon aria-label="menu">menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/dashboard">
+                <mat-icon aria-label="home">home</mat-icon>
+                HOME
+            </button>
+            <button mat-menu-item routerLink="/order">
+                <mat-icon aria-label="home">reorder</mat-icon>
+                PEDIDOS
+            </button>
+            <button mat-menu-item routerLink="/menu">
+                <mat-icon aria-label="home">restaurant_menu</mat-icon>
+                CARDÁPIOS
+            </button>
+            <button mat-menu-item routerLink="/waiter">
+                <mat-icon aria-label="home">fastfood</mat-icon>
+                GARÇONS
+            </button>
+            <button mat-menu-item routerLink="/table">
+                <mat-icon aria-label="home">table_chart</mat-icon>
+                MESAS
+            </button>
+            <button mat-menu-item routerLink="/profile">
+                <mat-icon aria-label="home">person</mat-icon>
+                PERFIL
+            </button>
+            <button mat-menu-item (click)="_authService.logout()">
+                <mat-icon aria-label="home">power_settings_new</mat-icon>
+                SAIR
+            </button>
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>
