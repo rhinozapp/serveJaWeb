@@ -1,0 +1,150 @@
+@import "_variables";
+
+/* You can add global styles to this file, and also import other style files */
+@import "../../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*Custom*/
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+b{
+    font-weight:700;
+}
+
+a{
+    text-decoration: underline;
+}
+
+.space{
+    flex: 1 1 auto;
+}
+
+/*Content*/
+@mixin float($float){
+    float: ($float);
+}
+
+.header{
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    align-content: start;
+    height: 100px;
+}
+
+.content{
+    align-content: start;
+    padding: 0 16px;
+    width: 100%;
+    align-items: center;
+    white-space: nowrap;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+table{
+    width: 100%;
+}
+
+td, th{
+    width: 25%;
+}
+
+.mat-header-cell{
+    padding: 20px !important;
+    justify-content:flex-end;
+}
+
+.mat-cell{
+    padding: 20px !important;
+}
+
+.mobile-label {
+    display: none;
+}
+
+@media(max-width: 600px) {
+    /*Custom header label that shows in each column, with a set width and bold font*/
+    .mobile-label {
+        width: 80px;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    /*Remove the header row altogether*/
+    .mat-header-row {
+        display: none;
+    }
+
+    /*The cell cells should display as a column, justified left, with a bit of extra padding*/
+    .mat-row {
+        flex-direction: column;
+        align-items: start;
+        padding: 8px 24px;
+    }
+}
+
+.data-table-nothing{
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    padding: 30px;
+
+    p{ word-wrap: break-word }
+}

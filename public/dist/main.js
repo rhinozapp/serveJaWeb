@@ -186,12 +186,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_table_table_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/table/table.component */ "./src/app/components/table/table.component.ts");
 /* harmony import */ var _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/waiter/waiter.component */ "./src/app/components/waiter/waiter.component.ts");
 /* harmony import */ var _components_order_order_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/order/order.component */ "./src/app/components/order/order.component.ts");
+/* harmony import */ var _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./services/waiter/waiter.service */ "./src/app/services/waiter/waiter.service.ts");
+/* harmony import */ var _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/helpers/dialog-confirm/dialog-confirm.component */ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -234,29 +238,57 @@ var AppModule = /** @class */ (function () {
                 _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_22__["DashboardComponent"],
                 _components_table_table_component__WEBPACK_IMPORTED_MODULE_23__["TableComponent"],
                 _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_24__["WaiterComponent"],
-                _components_order_order_component__WEBPACK_IMPORTED_MODULE_25__["OrderComponent"]
+                _components_order_order_component__WEBPACK_IMPORTED_MODULE_25__["OrderComponent"],
+                _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_24__["AddWaiterDialogComponent"],
+                _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__["DialogConfirmComponent"]
             ],
             entryComponents: [
                 _components_my_toolbar_my_toolbar_component__WEBPACK_IMPORTED_MODULE_8__["LoginDialogComponent"],
-                _components_my_toolbar_my_toolbar_component__WEBPACK_IMPORTED_MODULE_8__["SignUpDialogComponent"]
+                _components_my_toolbar_my_toolbar_component__WEBPACK_IMPORTED_MODULE_8__["SignUpDialogComponent"],
+                _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_24__["AddWaiterDialogComponent"],
+                _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__["DialogConfirmComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_service_worker__WEBPACK_IMPORTED_MODULE_3__["ServiceWorkerModule"].register('/ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production }),
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
                 _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_6__["LayoutModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatToolbarModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatAutocompleteModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatBadgeModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatBottomSheetModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatButtonModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSidenavModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatIconModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatListModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatButtonToggleModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatCardModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatCheckboxModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatChipsModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatStepperModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDatepickerModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialogModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatInputModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSelectModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatOptionModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBarModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatMenuModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDividerModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatExpansionModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatGridListModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatIconModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatInputModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatListModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatMenuModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatNativeDateModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatPaginatorModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatProgressBarModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatProgressSpinnerModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatRadioModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatRippleModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSelectModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSidenavModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSliderModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSlideToggleModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBarModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSortModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatTableModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatTabsModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatToolbarModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatTooltipModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatTreeModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatOptionModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HttpClientModule"],
@@ -279,6 +311,7 @@ var AppModule = /** @class */ (function () {
                 _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_14__["HelpersService"],
                 _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthService"],
                 _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"],
+                _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_26__["WaiterService"],
                 {
                     provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HTTP_INTERCEPTORS"],
                     useClass: _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthInterceptor"],
@@ -357,6 +390,76 @@ var DashboardComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], DashboardComponent);
     return DashboardComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.css":
+/*!********************************************************************************!*\
+  !*** ./src/app/components/helpers/dialog-confirm/dialog-confirm.component.css ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.html":
+/*!*********************************************************************************!*\
+  !*** ./src/app/components/helpers/dialog-confirm/dialog-confirm.component.html ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h2 mat-dialog-title>{{confirmTitle}}</h2>\n\n<mat-dialog-content align=\"center\" style=\"height: 60px\">\n    <span>\n        {{confirmMessage}}\n    </span>\n</mat-dialog-content>\n\n<mat-dialog-actions>\n    <button mat-button (click)=\"dialogRef.close(false)\">Cancelar</button>\n    <div class=\"space\"></div>\n    <button mat-button (click)=\"dialogRef.close(true)\">Ok</button>\n</mat-dialog-actions>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.ts":
+/*!*******************************************************************************!*\
+  !*** ./src/app/components/helpers/dialog-confirm/dialog-confirm.component.ts ***!
+  \*******************************************************************************/
+/*! exports provided: DialogConfirmComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DialogConfirmComponent", function() { return DialogConfirmComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var DialogConfirmComponent = /** @class */ (function () {
+    function DialogConfirmComponent(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    DialogConfirmComponent.prototype.ngOnInit = function () { };
+    DialogConfirmComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-dialog-confirm',
+            template: __webpack_require__(/*! ./dialog-confirm.component.html */ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.html"),
+            styles: [__webpack_require__(/*! ./dialog-confirm.component.css */ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.css")]
+        }),
+        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"])),
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"], Object])
+    ], DialogConfirmComponent);
+    return DialogConfirmComponent;
 }());
 
 
@@ -1039,6 +1142,17 @@ var TableComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/waiter/addWaiterDialog.html":
+/*!********************************************************!*\
+  !*** ./src/app/components/waiter/addWaiterDialog.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h2 mat-dialog-title>Garçom</h2>\n\n<form [formGroup]=\"_myForm\" (submit)=\"addWaiterAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field>\n            <mat-label>Nome Completo</mat-label>\n            <input matInput\n                   autocomplete=\"false\"\n                   [(ngModel)]=\"waiter.name\"\n                   name=\"name\"\n\n                   (keyup)=\"applyName($event.target.value)\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"name\"\n                   [formControl]=\"_myForm.controls.name\"\n                   placeholder=\"Nome Completo\">\n\n            <mat-error *ngIf=\"_myForm.controls.name.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field>\n            <mat-label>Nome de usuário (nome.sobrenome)</mat-label>\n            <input matInput\n                   [(ngModel)]=\"waiter.username\"\n                   name=\"username\"\n\n                   [readonly]=\"readonly\"\n                   (ngModelChange)=\"usernameValidation($event)\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"username\"\n                   [formControl]=\"_myForm.controls.username\"\n                   placeholder=\"Nome de usuário (nome.sobrenome)\">\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('minlength')\">\n                Este campo deve ter no mínimo 6 caracteres\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('pattern')\">\n                Este campo deve ter um . entre os nomes\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('usernameExist')\">\n                Este nome de usuário já existe, insira outro.\n            </mat-error>\n        </mat-form-field>\n\n        <div style=\"margin: 30px;\" *ngIf=\"!waiter._id\">\n            <p>A senha será padrão (<b>SERVEJA</b>) para o primeiro acesso</p>\n        </div>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"end\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">Salvar Garçom!</button>\n    </mat-dialog-actions>\n</form>\n"
+
+/***/ }),
+
 /***/ "./src/app/components/waiter/waiter.component.css":
 /*!********************************************************!*\
   !*** ./src/app/components/waiter/waiter.component.css ***!
@@ -1046,7 +1160,7 @@ var TableComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".mat-form-field {\n  font-size: 14px;\n  width: 100%; }\n\n/*# sourceMappingURL=waiter.component.css.map */\n"
 
 /***/ }),
 
@@ -1057,7 +1171,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  waiter works!\n</p>\n"
+module.exports = "<div class=\"header\">\n    <div>\n        <p>Garçons</p>\n    </div>\n    <div class=\"space\"></div>\n    <div>\n        <button mat-raised-button (click)=\"addWaiter()\">Inserir garçom</button>\n    </div>\n</div>\n\n<div class=\"content\">\n    <mat-form-field *ngIf=\"listWaterArray\">\n        <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Pesquise aqui\">\n    </mat-form-field>\n\n    <div class=\"mat-elevation-z8\">\n        <div *ngIf=\"listWaterArray\">\n            <mat-table [class.isMobile]=\"isMobile\" [dataSource]=\"listWaterArray\" matSort>\n                <!-- name column -->\n                <ng-container matColumnDef=\"name\">\n                    <span class=\"mobile-label\">nome:</span>\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome</th>\n                    <td mat-cell *matCellDef=\"let row\">{{row.name}}</td>\n                </ng-container>\n\n                <!-- username column -->\n                <ng-container matColumnDef=\"username\">\n                    <span class=\"mobile-label\">nome de usuário:</span>\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome de usuário</th>\n                    <td mat-cell *matCellDef=\"let row\">{{row.username}}</td>\n                </ng-container>\n\n                <!-- edit column -->\n                <ng-container matColumnDef=\"actions\">\n                    <th mat-header-cell *matHeaderCellDef></th>\n                    <td mat-cell *matCellDef=\"let row\" style=\"text-align: right;\">\n                        <button (click)=\"addWaiter(row)\" mat-icon-button>\n                            <mat-icon aria-label=\"edit\">edit</mat-icon>\n                        </button>\n                        <button (click)=\"confirmDelete(row)\" mat-icon-button>\n                            <mat-icon aria-label=\"delete\">delete</mat-icon>\n                        </button>\n                        <button (click)=\"confirmResetPassword(row)\" mat-raised-button color=\"primary\">Resetar Senha</button>\n                    </td>\n                </ng-container>\n\n                <!-- header -->\n                <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n                <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n            </mat-table>\n\n            <mat-paginator [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\n        </div>\n\n        <div class=\"data-table-nothing\" *ngIf=\"!listWaterArray\">\n            <p>Não existem garçons cadastrados :( </p>\n            <p><button mat-button (click)=\"addWaiter()\">CLIQUE AQUI</button></p>\n            <p>para incluir um novo garçom!</p>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -1065,13 +1179,23 @@ module.exports = "<p>\n  waiter works!\n</p>\n"
 /*!*******************************************************!*\
   !*** ./src/app/components/waiter/waiter.component.ts ***!
   \*******************************************************/
-/*! exports provided: WaiterComponent */
+/*! exports provided: WaiterComponent, AddWaiterDialogComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaiterComponent", function() { return WaiterComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddWaiterDialogComponent", function() { return AddWaiterDialogComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/waiter/waiter.service */ "./src/app/services/waiter/waiter.service.ts");
+/* harmony import */ var _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/auth/auth.service */ "./src/app/services/auth/auth.service.ts");
+/* harmony import */ var _models_place__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/place */ "./src/app/models/place.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _default_error_matcher__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../default.error-matcher */ "./src/app/default.error-matcher.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _models_waiter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../models/waiter */ "./src/app/models/waiter.ts");
+/* harmony import */ var _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/helpers/helpers.service */ "./src/app/services/helpers/helpers.service.ts");
+/* harmony import */ var _helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../helpers/dialog-confirm/dialog-confirm.component */ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1081,20 +1205,201 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+
+
+
+
+
 
 var WaiterComponent = /** @class */ (function () {
-    function WaiterComponent() {
+    function WaiterComponent(_waiterService, _authService, _dialog, _helperService) {
+        this._waiterService = _waiterService;
+        this._authService = _authService;
+        this._dialog = _dialog;
+        this._helperService = _helperService;
+        this._place = new _models_place__WEBPACK_IMPORTED_MODULE_3__["Place"];
+        this.displayedColumns = ['name', 'username', 'actions'];
+        this._place = this._authService.decodeProfile();
+        this.listWaterArray = new _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatTableDataSource"]([]);
     }
-    WaiterComponent.prototype.ngOnInit = function () { };
+    WaiterComponent.prototype.ngAfterViewInit = function () {
+        this.getListWaiter();
+    };
+    WaiterComponent.prototype.confirmDelete = function (waiter) {
+        var _this = this;
+        this.confirmRef = this._dialog.open(_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_9__["DialogConfirmComponent"], {
+            width: '400px',
+            disableClose: false
+        });
+        this.confirmRef.componentInstance.confirmMessage = 'Tem certeza que deseja excluir esse garçom?';
+        this.confirmRef.componentInstance.confirmTitle = 'Atenção!';
+        this.confirmRef
+            .afterClosed()
+            .subscribe(function (result) {
+            result ?
+                _this._waiterService.deleteWaiter(waiter)
+                    .subscribe(function (data) {
+                    data.status ?
+                        _this._helperService.openSnackBar('Garçom deletado!', 'OK') :
+                        _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
+                }) : false;
+            _this.getListWaiter();
+        }, function () { return _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'); });
+    };
+    WaiterComponent.prototype.confirmResetPassword = function (waiter) {
+        var _this = this;
+        this.confirmRef = this._dialog.open(_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_9__["DialogConfirmComponent"], {
+            width: '400px',
+            disableClose: false
+        });
+        this.confirmRef.componentInstance.confirmMessage = 'Tem certeza que deseja resetar a senha desse garçom? A senha será alterada para SERVEJA';
+        this.confirmRef.componentInstance.confirmTitle = 'Atenção!';
+        this.confirmRef
+            .afterClosed()
+            .subscribe(function (result) {
+            result ?
+                _this._waiterService.resetPassword(waiter)
+                    .subscribe(function (data) {
+                    data.status ?
+                        _this._helperService.openSnackBar('Senha resetada!', 'OK') :
+                        _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
+                }) : false;
+            _this.getListWaiter();
+        }, function () { return _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'); });
+    };
+    WaiterComponent.prototype.getListWaiter = function () {
+        var _this = this;
+        this._waiterService.getListWaiter(this._place)
+            .subscribe(function (data) {
+            data.status ?
+                _this.defineData(data) :
+                _this.listWaterArray;
+        });
+    };
+    WaiterComponent.prototype.defineData = function (data) {
+        this.listWaterArray = new _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatTableDataSource"](data.result);
+        this.listWaterArray.paginator = this.paginator;
+        this.listWaterArray.sort = this.sort;
+    };
+    WaiterComponent.prototype.applyFilter = function (filterValue) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.listWaterArray.filter = filterValue;
+        if (this.listWaterArray.paginator) {
+            this.listWaterArray.paginator.firstPage();
+        }
+    };
+    WaiterComponent.prototype.addWaiter = function (data) {
+        var _this = this;
+        this._dialog.open(AddWaiterDialogComponent, {
+            width: '500px',
+            data: data ? data : {},
+            disableClose: true
+        })
+            .afterClosed()
+            .subscribe(function () { return _this.getListWaiter(); });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatPaginator"]),
+        __metadata("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatPaginator"])
+    ], WaiterComponent.prototype, "paginator", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSort"]),
+        __metadata("design:type", _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSort"])
+    ], WaiterComponent.prototype, "sort", void 0);
     WaiterComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-waiter',
             template: __webpack_require__(/*! ./waiter.component.html */ "./src/app/components/waiter/waiter.component.html"),
             styles: [__webpack_require__(/*! ./waiter.component.css */ "./src/app/components/waiter/waiter.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_1__["WaiterService"],
+            _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"],
+            _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_8__["HelpersService"]])
     ], WaiterComponent);
     return WaiterComponent;
+}());
+
+var AddWaiterDialogComponent = /** @class */ (function () {
+    function AddWaiterDialogComponent(dialogRef, data, formBuilder, _authService, _helperService, _waiterService) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this._authService = _authService;
+        this._helperService = _helperService;
+        this._waiterService = _waiterService;
+        this.matcher = new _default_error_matcher__WEBPACK_IMPORTED_MODULE_5__["MyErrorStateMatcher"]();
+        this._place = new _models_place__WEBPACK_IMPORTED_MODULE_3__["Place"];
+        this.waiter = new _models_waiter__WEBPACK_IMPORTED_MODULE_7__["Waiter"]();
+        this.readonly = false;
+        data ?
+            this.waiter = data : false;
+        this.waiter._id ?
+            this.readonly = true : this.readonly = false;
+        this._place = this._authService.decodeProfile();
+        this._myForm = formBuilder.group({
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required]),
+            username: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(6),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('\\b(\\w+[.]\\w+)')
+            ])
+        });
+    }
+    AddWaiterDialogComponent.prototype.ngOnInit = function () { };
+    AddWaiterDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    AddWaiterDialogComponent.prototype.addWaiterAction = function () {
+        var _this = this;
+        this._waiterService.saveWaiter(this.waiter, this._place)
+            .subscribe(function (data) {
+            data.status ?
+                (_this._helperService.openSnackBar('Garçom inserido com sucesso!', 'OK'),
+                    _this.onNoClick()) :
+                _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
+        }, function () { return _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'); });
+    };
+    AddWaiterDialogComponent.prototype.applyName = function (value) {
+        this.waiter._id ?
+            this.readonly = true :
+            value.indexOf(' ') > 1 ?
+                this.waiter.username =
+                    value.split(' ')[0].toLowerCase() + '.' + value.split(' ')[value.split(' ').length - 1].toLowerCase() :
+                this.waiter.username = value.toLowerCase();
+    };
+    AddWaiterDialogComponent.prototype.usernameValidation = function (value) {
+        var _this = this;
+        !this.waiter._id && !this._myForm.get('username').errors ?
+            value ?
+                this._waiterService.usernameValidation({ username: value })
+                    .subscribe(function (data) {
+                    !data.status ?
+                        _this._myForm.get('username').setErrors({ 'usernameExist': true }) :
+                        _this._myForm.get('username').setErrors(null);
+                }) : false :
+            null;
+    };
+    AddWaiterDialogComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'add-waiter-dialog',
+            template: __webpack_require__(/*! ./addWaiterDialog.html */ "./src/app/components/waiter/addWaiterDialog.html"),
+            styles: [__webpack_require__(/*! ./waiter.component.css */ "./src/app/components/waiter/waiter.component.css")]
+        }),
+        __param(1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_4__["MAT_DIALOG_DATA"])),
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialogRef"], Object, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormBuilder"],
+            _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"],
+            _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_8__["HelpersService"],
+            _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_1__["WaiterService"]])
+    ], AddWaiterDialogComponent);
+    return AddWaiterDialogComponent;
 }());
 
 
@@ -1153,6 +1458,26 @@ var PlaceLoc = /** @class */ (function () {
     function PlaceLoc(coordinates) {
     }
     return PlaceLoc;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/models/waiter.ts":
+/*!**********************************!*\
+  !*** ./src/app/models/waiter.ts ***!
+  \**********************************/
+/*! exports provided: Waiter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Waiter", function() { return Waiter; });
+var Waiter = /** @class */ (function () {
+    function Waiter() {
+    }
+    return Waiter;
 }());
 
 
@@ -1554,6 +1879,65 @@ var CnpjValidator = /** @class */ (function () {
                 { validCNPJ: true };
     };
     return CnpjValidator;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/waiter/waiter.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/services/waiter/waiter.service.ts ***!
+  \***************************************************/
+/*! exports provided: WaiterService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaiterService", function() { return WaiterService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _api_service_api_service_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api-service/api-service.service */ "./src/app/services/api-service/api-service.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var WaiterService = /** @class */ (function () {
+    function WaiterService(_apiService, _http) {
+        this._apiService = _apiService;
+        this._http = _http;
+    }
+    WaiterService.prototype.getListWaiter = function (place) {
+        return this._http.post(this._apiService.url + 'web/getListWaiter', place);
+    };
+    WaiterService.prototype.saveWaiter = function (waiter, place) {
+        return this._http.post(this._apiService.url + 'web/saveWaiter', {
+            waiter: waiter, place: place
+        });
+    };
+    WaiterService.prototype.usernameValidation = function (waiter) {
+        return this._http.post(this._apiService.url + 'web/usernameValidation', waiter);
+    };
+    WaiterService.prototype.resetPassword = function (waiter) {
+        return this._http.post(this._apiService.url + 'web/resetPassword', waiter);
+    };
+    WaiterService.prototype.deleteWaiter = function (waiter) {
+        return this._http.post(this._apiService.url + 'web/deleteWaiter', waiter);
+    };
+    WaiterService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_api_service_api_service_service__WEBPACK_IMPORTED_MODULE_1__["ApiServiceService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    ], WaiterService);
+    return WaiterService;
 }());
 
 

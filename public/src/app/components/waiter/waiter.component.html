@@ -1,3 +1,61 @@
-<p>
-  waiter works!
-</p>
+<div class="header">
+    <div>
+        <p>Garçons</p>
+    </div>
+    <div class="space"></div>
+    <div>
+        <button mat-raised-button (click)="addWaiter()">Inserir garçom</button>
+    </div>
+</div>
+
+<div class="content">
+    <mat-form-field *ngIf="listWaterArray">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pesquise aqui">
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <div *ngIf="listWaterArray">
+            <mat-table [class.isMobile]="isMobile" [dataSource]="listWaterArray" matSort>
+                <!-- name column -->
+                <ng-container matColumnDef="name">
+                    <span class="mobile-label">nome:</span>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome</th>
+                    <td mat-cell *matCellDef="let row">{{row.name}}</td>
+                </ng-container>
+
+                <!-- username column -->
+                <ng-container matColumnDef="username">
+                    <span class="mobile-label">nome de usuário:</span>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome de usuário</th>
+                    <td mat-cell *matCellDef="let row">{{row.username}}</td>
+                </ng-container>
+
+                <!-- edit column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row" style="text-align: right;">
+                        <button (click)="addWaiter(row)" mat-icon-button>
+                            <mat-icon aria-label="edit">edit</mat-icon>
+                        </button>
+                        <button (click)="confirmDelete(row)" mat-icon-button>
+                            <mat-icon aria-label="delete">delete</mat-icon>
+                        </button>
+                        <button (click)="confirmResetPassword(row)" mat-raised-button color="primary">Resetar Senha</button>
+                    </td>
+                </ng-container>
+
+                <!-- header -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+        <div class="data-table-nothing" *ngIf="!listWaterArray">
+            <p>Não existem garçons cadastrados :( </p>
+            <p><button mat-button (click)="addWaiter()">CLIQUE AQUI</button></p>
+            <p>para incluir um novo garçom!</p>
+        </div>
+    </div>
+</div>

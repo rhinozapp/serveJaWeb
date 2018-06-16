@@ -5,17 +5,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import {
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatInputModule,
-    ErrorStateMatcher,
-    MatOptionModule,
-    MatSelectModule, MatSnackBarModule, MatMenuModule, MatGridListModule
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatDialogModule, MatInputModule, ErrorStateMatcher, MatOptionModule, MatSelectModule, MatSnackBarModule, MatMenuModule, MatGridListModule, MatTableModule, MatPaginatorModule, MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonToggleModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatStepperModule, MatDatepickerModule, MatDividerModule, MatExpansionModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSliderModule, MatSlideToggleModule, MatSortModule, MatTabsModule, MatTooltipModule, MatTreeModule
 } from '@angular/material';
 import {LoginDialogComponent, MyToolbarComponent, SignUpDialogComponent} from './components/my-toolbar/my-toolbar.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -33,8 +23,10 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TableComponent } from './components/table/table.component';
-import { WaiterComponent } from './components/waiter/waiter.component';
+import {AddWaiterDialogComponent, WaiterComponent} from './components/waiter/waiter.component';
 import { OrderComponent } from './components/order/order.component';
+import {WaiterService} from "./services/waiter/waiter.service";
+import { DialogConfirmComponent } from './components/helpers/dialog-confirm/dialog-confirm.component';
 
 @NgModule({
     declarations: [
@@ -48,29 +40,57 @@ import { OrderComponent } from './components/order/order.component';
         DashboardComponent,
         TableComponent,
         WaiterComponent,
-        OrderComponent
+        OrderComponent,
+        AddWaiterDialogComponent,
+        DialogConfirmComponent
     ],
     entryComponents : [
         LoginDialogComponent,
-        SignUpDialogComponent
+        SignUpDialogComponent,
+        AddWaiterDialogComponent,
+        DialogConfirmComponent
     ],
     imports: [
         BrowserModule,
         ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
         BrowserAnimationsModule,
         LayoutModule,
-        MatToolbarModule,
+        MatAutocompleteModule,
+        MatBadgeModule,
+        MatBottomSheetModule,
         MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        MatStepperModule,
+        MatDatepickerModule,
         MatDialogModule,
-        MatInputModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatSnackBarModule,
-        MatMenuModule,
+        MatDividerModule,
+        MatExpansionModule,
         MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatNativeDateModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatSortModule,
+        MatTableModule,
+        MatTabsModule,
+        MatToolbarModule,
+        MatTooltipModule,
+        MatTreeModule,
+        MatOptionModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -93,6 +113,7 @@ import { OrderComponent } from './components/order/order.component';
         HelpersService,
         AuthService,
         AuthGuard,
+        WaiterService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

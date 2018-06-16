@@ -1,11 +1,9 @@
-exports.cnpjValidation = function(req, res) {
+exports.usernameValidation = function(req, res) {
     let mongoose = require('mongoose'),
-        place = mongoose.model('place'),
+        waiter = mongoose.model('waiter'),
         logger = require('../../../../logger');
 
-    console.log(req.body);
-
-    place.findOne({ cnpj: req.body.cnpj })
+    waiter.findOne({ username: req.body.username })
         .then(function(user) {
             logger.log('info', user);
             if (user) {
@@ -16,6 +14,6 @@ exports.cnpjValidation = function(req, res) {
             }
         }, function(err) {
             logger.log('error', err);
-            res.json({ status: false })
+            res.json({ status: false})
         })
 };

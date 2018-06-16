@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>Garçom</h2>
+
+<form [formGroup]="_myForm" (submit)="addWaiterAction(); false;">
+    <mat-dialog-content align="center">
+        <mat-form-field>
+            <mat-label>Nome Completo</mat-label>
+            <input matInput
+                   autocomplete="false"
+                   [(ngModel)]="waiter.name"
+                   name="name"
+
+                   (keyup)="applyName($event.target.value)"
+
+                   [errorStateMatcher]="matcher"
+                   formControlName="name"
+                   [formControl]="_myForm.controls.name"
+                   placeholder="Nome Completo">
+
+            <mat-error *ngIf="_myForm.controls.name.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nome de usuário (nome.sobrenome)</mat-label>
+            <input matInput
+                   [(ngModel)]="waiter.username"
+                   name="username"
+
+                   [readonly]="readonly"
+                   (ngModelChange)="usernameValidation($event)"
+
+                   [errorStateMatcher]="matcher"
+                   formControlName="username"
+                   [formControl]="_myForm.controls.username"
+                   placeholder="Nome de usuário (nome.sobrenome)">
+
+            <mat-error *ngIf="_myForm.controls.username.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+
+            <mat-error *ngIf="_myForm.controls.username.hasError('minlength')">
+                Este campo deve ter no mínimo 6 caracteres
+            </mat-error>
+
+            <mat-error *ngIf="_myForm.controls.username.hasError('pattern')">
+                Este campo deve ter um . entre os nomes
+            </mat-error>
+
+            <mat-error *ngIf="_myForm.controls.username.hasError('usernameExist')">
+                Este nome de usuário já existe, insira outro.
+            </mat-error>
+        </mat-form-field>
+
+        <div style="margin: 30px;" *ngIf="!waiter._id">
+            <p>A senha será padrão (<b>SERVEJA</b>) para o primeiro acesso</p>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button
+                mat-dialog-close>Cancelar</button>
+        <div class="space"></div>
+        <button mat-button
+                [type]="submit"
+                [disabled]="_myForm.invalid">Salvar Garçom!</button>
+    </mat-dialog-actions>
+</form>

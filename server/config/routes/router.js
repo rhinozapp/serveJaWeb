@@ -15,17 +15,34 @@ module.exports = function(app) {
     //endregion
 
     //region SignUp / doLogin
-    let doSignUpWeb = require('./web/modules/login/doSignUp');
+    let doSignUpWeb = require('./web/modules/auth/doSignUp');
     app.post('/web/doSignUp', doSignUpWeb.doSignUp);
 
-    let doLoginWeb = require('./web/modules/login/doLogin');
+    let doLoginWeb = require('./web/modules/auth/doLogin');
     app.post('/web/doLogin', doLoginWeb.doLogin);
 
-    let emailValidationWeb = require('./web/modules/login/emailValidation');
+    let emailValidationWeb = require('./web/modules/auth/emailValidation');
     app.post('/web/emailValidation', emailValidationWeb.emailValidation);
 
-    let cnpjValidationWeb = require('./web/modules/login/cnpjValidation');
+    let cnpjValidationWeb = require('./web/modules/auth/cnpjValidation');
     app.post('/web/cnpjValidation', cnpjValidationWeb.cnpjValidation);
+    //endregion
+
+    //region Waiter
+    let getListWaiter = require('./web/modules/waiter/getListWaiter');
+    app.post('/web/getListWaiter', getListWaiter.getListWaiter);
+
+    let saveWaiter = require('./web/modules/waiter/saveWaiter');
+    app.post('/web/saveWaiter', saveWaiter.saveWaiter);
+
+    let usernameValidation = require('./web/modules/waiter/usernameValidation');
+    app.post('/web/usernameValidation', usernameValidation.usernameValidation);
+
+    let resetPassword = require('./web/modules/waiter/resetPassword');
+    app.post('/web/resetPassword', resetPassword.resetPassword);
+
+    let deleteWaiter = require('./web/modules/waiter/deleteWaiter');
+    app.post('/web/deleteWaiter', deleteWaiter.deleteWaiter);
     //endregion
 
     //region Recovery Password

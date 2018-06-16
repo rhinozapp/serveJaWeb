@@ -3,8 +3,6 @@ exports.emailValidation = function(req, res) {
         place = mongoose.model('place'),
         logger = require('../../../../logger');
 
-    console.log(req.body);
-
     place.findOne({ email: req.body.email })
         .then(function(user) {
             logger.log('info', user);
