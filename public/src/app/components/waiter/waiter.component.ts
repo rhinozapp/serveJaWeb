@@ -50,11 +50,10 @@ export class WaiterComponent implements AfterViewInit {
                     this._waiterService.deleteWaiter(waiter)
                         .subscribe((data : any) => {
                             data.status ?
-                                this._helperService.openSnackBar('Garçom deletado!', 'OK') :
+                                (this.getListWaiter(),
+                                    this._helperService.openSnackBar('Garçom deletado!', 'OK')) :
                                 this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
                         }) : false;
-
-                this.getListWaiter();
             }, () => this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'));
     }
 
@@ -76,8 +75,6 @@ export class WaiterComponent implements AfterViewInit {
                                 this._helperService.openSnackBar('Senha resetada!', 'OK') :
                                 this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
                         }) : false;
-
-                this.getListWaiter();
             }, () => this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'));
     }
 
@@ -86,7 +83,7 @@ export class WaiterComponent implements AfterViewInit {
             .subscribe((data : any )=> {
                 data.status ?
                     this.defineData(data) :
-                    this.listWaterArray;
+                    this.listWaterArray = new MatTableDataSource([]);
             });
     }
 

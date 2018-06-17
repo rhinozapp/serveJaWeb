@@ -4,8 +4,6 @@ exports.deleteWaiter = function (req, res) {
 
     waiter.remove({
         _id : req.body._id
-    },{
-        multi : false
     }, function () {
         res.json({status : true});
     }, function () {

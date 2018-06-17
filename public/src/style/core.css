@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 @import url(../../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css);
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -58,8 +57,8 @@ b {
 a {
   text-decoration: underline; }
 
-.space {
-  flex: 1 1 auto; }
+p {
+  white-space: normal; }
 
 /*Content*/
 .header {
@@ -82,15 +81,15 @@ a {
   flex-direction: row;
   box-sizing: border-box; }
 
+.space {
+  flex: 1 1 auto; }
+
+/*Table*/
 table {
   width: 100%; }
 
-td, th {
-  width: 25%; }
-
 .mat-header-cell {
-  padding: 20px !important;
-  justify-content: flex-end; }
+  padding: 20px !important; }
 
 .mat-cell {
   padding: 20px !important; }
@@ -98,22 +97,34 @@ td, th {
 .mobile-label {
   display: none; }
 
-@media (max-width: 600px) {
-  /*Custom header label that shows in each column, with a set width and bold font*/
-  .mobile-label {
-    width: 80px;
-    display: inline-block;
-    font-weight: bold; }
+.mobile-label-actions {
+  float: right;
+  text-align: right;
+  width: 100%; }
 
+@media (max-width: 650px) {
   /*Remove the header row altogether*/
-  .mat-header-row {
+  thead {
     display: none; }
 
+  /*Custom header label that shows in each column, with a set width and bold font*/
+  .mobile-label {
+    width: auto;
+    float: none; }
+
+  .mobile-label-value {
+    width: 50%;
+    float: right;
+    text-align: right; }
+
+  .mobile-label, .mobile-label-value {
+    display: inline-block; }
+
   /*The cell cells should display as a column, justified left, with a bit of extra padding*/
-  .mat-row {
+  tr {
+    display: flex;
     flex-direction: column;
-    align-items: start;
-    padding: 8px 24px; } }
+    height: auto !important; } }
 .data-table-nothing {
   box-sizing: border-box;
   width: 100%;

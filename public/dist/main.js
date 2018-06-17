@@ -79,7 +79,9 @@ var AppRoutingModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes)
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes, {
+                    preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__["PreloadAllModules"]
+                })
             ],
             exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
             declarations: []
@@ -1171,7 +1173,7 @@ module.exports = ".mat-form-field {\n  font-size: 14px;\n  width: 100%; }\n\n/*#
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"header\">\n    <div>\n        <p>Garçons</p>\n    </div>\n    <div class=\"space\"></div>\n    <div>\n        <button mat-raised-button (click)=\"addWaiter()\">Inserir garçom</button>\n    </div>\n</div>\n\n<div class=\"content\">\n    <mat-form-field *ngIf=\"listWaterArray\">\n        <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Pesquise aqui\">\n    </mat-form-field>\n\n    <div class=\"mat-elevation-z8\">\n        <div *ngIf=\"listWaterArray\">\n            <mat-table [class.isMobile]=\"isMobile\" [dataSource]=\"listWaterArray\" matSort>\n                <!-- name column -->\n                <ng-container matColumnDef=\"name\">\n                    <span class=\"mobile-label\">nome:</span>\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome</th>\n                    <td mat-cell *matCellDef=\"let row\">{{row.name}}</td>\n                </ng-container>\n\n                <!-- username column -->\n                <ng-container matColumnDef=\"username\">\n                    <span class=\"mobile-label\">nome de usuário:</span>\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome de usuário</th>\n                    <td mat-cell *matCellDef=\"let row\">{{row.username}}</td>\n                </ng-container>\n\n                <!-- edit column -->\n                <ng-container matColumnDef=\"actions\">\n                    <th mat-header-cell *matHeaderCellDef></th>\n                    <td mat-cell *matCellDef=\"let row\" style=\"text-align: right;\">\n                        <button (click)=\"addWaiter(row)\" mat-icon-button>\n                            <mat-icon aria-label=\"edit\">edit</mat-icon>\n                        </button>\n                        <button (click)=\"confirmDelete(row)\" mat-icon-button>\n                            <mat-icon aria-label=\"delete\">delete</mat-icon>\n                        </button>\n                        <button (click)=\"confirmResetPassword(row)\" mat-raised-button color=\"primary\">Resetar Senha</button>\n                    </td>\n                </ng-container>\n\n                <!-- header -->\n                <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n                <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n            </mat-table>\n\n            <mat-paginator [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\n        </div>\n\n        <div class=\"data-table-nothing\" *ngIf=\"!listWaterArray\">\n            <p>Não existem garçons cadastrados :( </p>\n            <p><button mat-button (click)=\"addWaiter()\">CLIQUE AQUI</button></p>\n            <p>para incluir um novo garçom!</p>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div class=\"header\">\n    <div><p>Administre abaixo os seus <b>Garçons</b></p></div>\n    <div class=\"space\"></div>\n    <div>\n        <button mat-raised-button (click)=\"addWaiter()\">Inserir garçom</button>\n    </div>\n</div>\n\n<div class=\"content\">\n    <mat-form-field *ngIf=\"listWaterArray.data.length > 0\">\n        <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Pesquise aqui\">\n        <mat-icon matSuffix mat-icon-button>search</mat-icon>\n    </mat-form-field>\n\n    <div class=\"mat-elevation-z8\">\n        <div *ngIf=\"listWaterArray.data.length > 0\">\n            <table mat-table [class.isMobile]=\"isMobile\" [dataSource]=\"listWaterArray\" matSort>\n                <!-- name column -->\n                <ng-container matColumnDef=\"name\">\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome</th>\n                    <td mat-cell *matCellDef=\"let row\">\n                        <div class=\"mobile-label\"><p>nome:</p></div>\n                        <div class=\"mobile-label-value\"><p>{{row.name}}</p></div>\n                    </td>\n                </ng-container>\n\n                <!-- username column -->\n                <ng-container matColumnDef=\"username\">\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>usuário</th>\n                    <td mat-cell *matCellDef=\"let row\">\n                        <div class=\"mobile-label\"><p>usuário:</p></div>\n                        <div class=\"mobile-label-value\"><p>{{row.username}}</p></div>\n                    </td>\n                </ng-container>\n\n                <!-- edit column -->\n                <ng-container matColumnDef=\"actions\">\n                    <th mat-header-cell *matHeaderCellDef></th>\n                    <td mat-cell *matCellDef=\"let row\" >\n                        <div class=\"mobile-label-actions\">\n                            <button (click)=\"addWaiter(row)\" mat-icon-button>\n                                <mat-icon aria-label=\"edit\">edit</mat-icon>\n                            </button>\n                            <button (click)=\"confirmDelete(row)\" mat-icon-button>\n                                <mat-icon aria-label=\"delete\">delete</mat-icon>\n                            </button>\n                            <button (click)=\"confirmResetPassword(row)\" mat-raised-button color=\"primary\">Resetar Senha</button>\n                        </div>\n                    </td>\n                </ng-container>\n\n                <!-- header -->\n                <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n                <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n            </table>\n\n            <mat-paginator [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\n        </div>\n\n        <div class=\"data-table-nothing\" *ngIf=\"listWaterArray.data.length === 0\">\n            <p>Não existem garçons cadastrados :( </p>\n            <p><button mat-button (click)=\"addWaiter()\">CLIQUE AQUI</button>para incluir um novo garçom!</p>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -1247,10 +1249,10 @@ var WaiterComponent = /** @class */ (function () {
                 _this._waiterService.deleteWaiter(waiter)
                     .subscribe(function (data) {
                     data.status ?
-                        _this._helperService.openSnackBar('Garçom deletado!', 'OK') :
+                        (_this.getListWaiter(),
+                            _this._helperService.openSnackBar('Garçom deletado!', 'OK')) :
                         _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
                 }) : false;
-            _this.getListWaiter();
         }, function () { return _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'); });
     };
     WaiterComponent.prototype.confirmResetPassword = function (waiter) {
@@ -1271,7 +1273,6 @@ var WaiterComponent = /** @class */ (function () {
                         _this._helperService.openSnackBar('Senha resetada!', 'OK') :
                         _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
                 }) : false;
-            _this.getListWaiter();
         }, function () { return _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'); });
     };
     WaiterComponent.prototype.getListWaiter = function () {
@@ -1280,7 +1281,7 @@ var WaiterComponent = /** @class */ (function () {
             .subscribe(function (data) {
             data.status ?
                 _this.defineData(data) :
-                _this.listWaterArray;
+                _this.listWaterArray = new _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatTableDataSource"]([]);
         });
     };
     WaiterComponent.prototype.defineData = function (data) {

@@ -1,0 +1,26 @@
+/*Content*/
+.header{
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    align-content: start;
+    height: 100px;
+}
+
+.content{
+    align-content: start;
+    padding: 0 16px;
+    width: 100%;
+    align-items: center;
+    white-space: nowrap;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.space{
+    flex: 1 1 auto;
+}
