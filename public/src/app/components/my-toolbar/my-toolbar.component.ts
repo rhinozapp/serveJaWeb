@@ -31,10 +31,11 @@ export class MyToolbarComponent {
     openLoginDialog(): void {
         this._dialog.open(LoginDialogComponent, {
             width: '500px',
+            height : '',
             data: {},
             disableClose : true
         })
-            .afterClosed().subscribe(result => {});
+            .afterClosed().subscribe(() => {});
     }
 
     openSignUpDialog(): void {
@@ -56,7 +57,11 @@ export class LoginDialogComponent {
 
     private _email : string;
     private _password : string;
+    private _myFormLoginPlace : FormGroup;
+    private _myFormRecoveryPassword : FormGroup;
     private _myForm : FormGroup;
+    public loginWaiter : boolean = false;
+    public recoveryPassword : boolean = false;
 
     constructor(
         public dialogRef: MatDialogRef<LoginDialogComponent>,
@@ -64,15 +69,20 @@ export class LoginDialogComponent {
         formBuilder : FormBuilder,
         private _placeService : PlaceService,
         private _authService : AuthService,
-        private _router : Router,
-        private _ngZone : NgZone) {
-        this._myForm = formBuilder.group({
+        private _helpers : HelpersService) {
+        this._myFormLoginPlace = formBuilder.group({
             email : new FormControl('', [
                 Validators.required,
                 Validators.email
             ]),
             password : new FormControl('', [
                 Validators.required
+            ])
+        });
+        this._myFormRecoveryPassword = formBuilder.group({
+            email : new FormControl('', [
+                Validators.required,
+                Validators.email
             ])
         });
     }
@@ -86,6 +96,16 @@ export class LoginDialogComponent {
             .subscribe((data : any) => {
                 data.status ? this.onNoClick() : false;
             });
+    }
+
+    recoveryPasswordAction(){
+        console.log(this._email);
+        this._authService.recoveryPassword(this._email)
+            .subscribe((data : any)=> {
+                data.status ?
+                    (this.onNoClick(), this._helpers.openSnackBar('Enviamos um E-mail de recuperação para seu e-mail (caso não tenha recebido, veja no SPAM)', 'OK')) :
+                    this._helpers.openSnackBar('Provavelemente este E-mail não está cadastrado conosco, tente com outro email', 'OK');
+                }, () => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'));
     }
 }
 
@@ -130,7 +150,6 @@ export class SignUpDialogComponent {
     private _repeatPassword : String;
     private _myForm : FormGroup;
     private _addressInfo : any;
-    public formBuilder : FormBuilder;
 
     public hide : boolean = true;
     public hide2 : boolean = true;

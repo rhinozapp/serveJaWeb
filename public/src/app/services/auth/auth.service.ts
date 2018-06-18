@@ -43,6 +43,10 @@ export class AuthService {
             );
     }
 
+    recoveryPassword(email){
+        return this._http.post(this._apiService.url + 'web/recoveryPasswordSend', {email});
+    }
+
     setSession(authResult) : void{
         localStorage.setItem('token', authResult.token);
         this._router.navigate(['/dashboard']);

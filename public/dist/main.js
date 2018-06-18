@@ -44,12 +44,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/waiter/waiter.component */ "./src/app/components/waiter/waiter.component.ts");
 /* harmony import */ var _components_table_table_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/table/table.component */ "./src/app/components/table/table.component.ts");
 /* harmony import */ var _components_order_order_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/order/order.component */ "./src/app/components/order/order.component.ts");
+/* harmony import */ var _components_recovery_password_recovery_password_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/recovery-password/recovery-password.component */ "./src/app/components/recovery-password/recovery-password.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -70,6 +72,7 @@ var routes = [
     { path: 'waiter', component: _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_8__["WaiterComponent"], canActivate: [_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] },
     { path: 'table', component: _components_table_table_component__WEBPACK_IMPORTED_MODULE_9__["TableComponent"], canActivate: [_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] },
     { path: 'order', component: _components_order_order_component__WEBPACK_IMPORTED_MODULE_10__["OrderComponent"], canActivate: [_services_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] },
+    { path: 'recoveryPassword/:h', component: _components_recovery_password_recovery_password_component__WEBPACK_IMPORTED_MODULE_11__["RecoveryPasswordComponent"] },
     { path: '**', redirectTo: '/home' }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -190,12 +193,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_order_order_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/order/order.component */ "./src/app/components/order/order.component.ts");
 /* harmony import */ var _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./services/waiter/waiter.service */ "./src/app/services/waiter/waiter.service.ts");
 /* harmony import */ var _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/helpers/dialog-confirm/dialog-confirm.component */ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.ts");
+/* harmony import */ var _components_recovery_password_recovery_password_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/recovery-password/recovery-password.component */ "./src/app/components/recovery-password/recovery-password.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -242,7 +247,8 @@ var AppModule = /** @class */ (function () {
                 _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_24__["WaiterComponent"],
                 _components_order_order_component__WEBPACK_IMPORTED_MODULE_25__["OrderComponent"],
                 _components_waiter_waiter_component__WEBPACK_IMPORTED_MODULE_24__["AddWaiterDialogComponent"],
-                _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__["DialogConfirmComponent"]
+                _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__["DialogConfirmComponent"],
+                _components_recovery_password_recovery_password_component__WEBPACK_IMPORTED_MODULE_28__["RecoveryPasswordComponent"]
             ],
             entryComponents: [
                 _components_my_toolbar_my_toolbar_component__WEBPACK_IMPORTED_MODULE_8__["LoginDialogComponent"],
@@ -600,7 +606,7 @@ var MenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Login</h2>\n<form [formGroup]=\"_myForm\" (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myForm.controls.email\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_password\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myForm.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"end\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n"
+module.exports = "<h2 mat-dialog-title>\n    <b>{{loginWaiter ? 'Entrar como Garçom' : recoveryPassword ? 'Resetar Senha' : 'Entrar como Estabelecimento'}}</b>\n</h2>\n\n<!--LOGIN PLACE-->\n<form *ngIf=\"!loginWaiter && !recoveryPassword\"\n      [formGroup]=\"_myFormLoginPlace\"\n      (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myFormLoginPlace.controls.email\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_password\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myFormLoginPlace.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <div><a (click)=\"recoveryPassword = true; loginWaiter = false\">Esqueci a minha senha</a></div>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = true; recoveryPassword = false\">Logar como Garçom</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormLoginPlace.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n\n<!-- LOGIN WAITER -->\n<form *ngIf=\"loginWaiter && !recoveryPassword\"\n      [formGroup]=\"_myForm\"\n      (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myForm.controls.email\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_password\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myForm.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = false; recoveryPassword = false\">Logar como Estabelecimento</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n\n<!-- RESET PASSWORD -->\n<form *ngIf=\"!loginWaiter && recoveryPassword\"\n      [formGroup]=\"_myFormRecoveryPassword\"\n      (submit)=\"recoveryPasswordAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myFormRecoveryPassword.controls.email\"\n                   placeholder=\"E-mail\"\n                   required>\n            <mat-icon matSuffix>email</mat-icon>\n\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('required')\">\n                Digite seu e-mail, enviaremos um link para reset de sua senha\n            </mat-error>\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('invalidEmail')\">\n                Este E-mail não está cadastrado conosco\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = false; recoveryPassword = false\">Voltar para o Login</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormRecoveryPassword.invalid\">Resetar senha</button>\n    </mat-dialog-actions>\n</form>\n"
 
 /***/ }),
 
@@ -611,7 +617,7 @@ module.exports = "<h2 mat-dialog-title>Login</h2>\n<form [formGroup]=\"_myForm\"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/*Variable*/\n/*Google*/\n.my-toolbar-icon {\n  padding: 0 14px; }\n.my-toolbar-spacer {\n  flex: 1 1 auto; }\n.mat-form-field {\n  width: 100%; }\n/*Google*/\n.pac-container {\n  width: 100%; }\n.pac-icon {\n  display: none; }\n.pac-item {\n  border: none; }\n/*Toolbar*/\n.mat-icon {\n  margin-top: -3px; }\n.menuVertical {\n  display: none !important; }\n@media (max-width: 815px) {\n  .menuHorizontal {\n    display: none !important; }\n\n  .menuVertical {\n    display: flex !important; } }\n/*# sourceMappingURL=my-toolbar.component.css.map */\n"
+module.exports = "/*Variable*/\n/*Google*/\n.pac-container {\n  width: 100%; }\n.pac-icon {\n  display: none; }\n.pac-item {\n  border: none; }\n/*# sourceMappingURL=my-toolbar.component.css.map */\n"
 
 /***/ }),
 
@@ -649,7 +655,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/internal/observable/forkJoin */ "./node_modules/rxjs/internal/observable/forkJoin.js");
 /* harmony import */ var rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(rxjs_internal_observable_forkJoin__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/auth/auth.service */ "./src/app/services/auth/auth.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -672,7 +677,6 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
-
 var MyToolbarComponent = /** @class */ (function () {
     function MyToolbarComponent(_dialog, _authService) {
         this._dialog = _dialog;
@@ -681,10 +685,11 @@ var MyToolbarComponent = /** @class */ (function () {
     MyToolbarComponent.prototype.openLoginDialog = function () {
         this._dialog.open(LoginDialogComponent, {
             width: '500px',
+            height: '',
             data: {},
             disableClose: true
         })
-            .afterClosed().subscribe(function (result) { });
+            .afterClosed().subscribe(function () { });
     };
     MyToolbarComponent.prototype.openSignUpDialog = function () {
         this._dialog.open(SignUpDialogComponent, {
@@ -708,21 +713,28 @@ var MyToolbarComponent = /** @class */ (function () {
 }());
 
 var LoginDialogComponent = /** @class */ (function () {
-    function LoginDialogComponent(dialogRef, data, formBuilder, _placeService, _authService, _router, _ngZone) {
+    function LoginDialogComponent(dialogRef, data, formBuilder, _placeService, _authService, _helpers) {
         this.dialogRef = dialogRef;
         this.data = data;
         this._placeService = _placeService;
         this._authService = _authService;
-        this._router = _router;
-        this._ngZone = _ngZone;
+        this._helpers = _helpers;
         this.matcher = new _default_error_matcher__WEBPACK_IMPORTED_MODULE_2__["MyErrorStateMatcher"]();
-        this._myForm = formBuilder.group({
+        this.loginWaiter = false;
+        this.recoveryPassword = false;
+        this._myFormLoginPlace = formBuilder.group({
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].email
             ]),
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
+            ])
+        });
+        this._myFormRecoveryPassword = formBuilder.group({
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].email
             ])
         });
     }
@@ -736,6 +748,16 @@ var LoginDialogComponent = /** @class */ (function () {
             data.status ? _this.onNoClick() : false;
         });
     };
+    LoginDialogComponent.prototype.recoveryPasswordAction = function () {
+        var _this = this;
+        console.log(this._email);
+        this._authService.recoveryPassword(this._email)
+            .subscribe(function (data) {
+            data.status ?
+                (_this.onNoClick(), _this._helpers.openSnackBar('Enviamos um E-mail de recuperação para seu e-mail (caso não tenha recebido, veja no SPAM)', 'OK')) :
+                _this._helpers.openSnackBar('Provavelemente este E-mail não está cadastrado conosco, tente com outro email', 'OK');
+        }, function () { return _this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'); });
+    };
     LoginDialogComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'login-dialog',
@@ -745,8 +767,7 @@ var LoginDialogComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"], Object, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
             _services_place_place_service__WEBPACK_IMPORTED_MODULE_4__["PlaceService"],
             _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_9__["AuthService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]])
+            _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_6__["HelpersService"]])
     ], LoginDialogComponent);
     return LoginDialogComponent;
 }());
@@ -1081,6 +1102,98 @@ var ProfileComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/recovery-password/recovery-password.component.css":
+/*!******************************************************************************!*\
+  !*** ./src/app/components/recovery-password/recovery-password.component.css ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".container {\n  margin: 20px auto; }\n\n.mat-form-field {\n  width: 100%;\n  display: unset; }\n\n/*# sourceMappingURL=recovery-password.component.css.map */\n"
+
+/***/ }),
+
+/***/ "./src/app/components/recovery-password/recovery-password.component.html":
+/*!*******************************************************************************!*\
+  !*** ./src/app/components/recovery-password/recovery-password.component.html ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n    <mat-card style=\"width: 90%\">\n        <form [formGroup]=\"_myFormRecoveryPassword\"\n              (submit)=\"resetPasswordAction(); false;\">\n            <mat-card-header>\n                <mat-card-title><p>Reset de senha</p></mat-card-title>\n                <mat-card-subtitle><p>faça abaixo o reset da sua senha</p></mat-card-subtitle>\n            </mat-card-header>\n\n            <mat-card-content align=\"center\">\n                    <!--PASSWORD-->\n                    <mat-form-field>\n                        <mat-label>Senha</mat-label>\n                        <input matInput\n                               formControlName=\"password\"\n                               [(ngModel)]=\"password\"\n                               [type]=\"hide ? 'password' : 'text'\"\n\n                               [errorStateMatcher]=\"matcher\"\n                               [formControl]=\"_myFormRecoveryPassword.controls.password\"\n                               placeholder=\"Entre com sua senha\">\n\n                        <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n\n                        <mat-error *ngIf=\"_myFormRecoveryPassword.controls.password.hasError('required')\">\n                            Este campo é obrigatório\n                        </mat-error>\n                        <mat-error *ngIf=\"_myFormRecoveryPassword.controls.password.hasError('minlength')\">\n                            Este campo deve ter no mínimo 8 caracteres\n                        </mat-error>\n                    </mat-form-field>\n\n                    <!--REPEAT PASSWORD-->\n                    <mat-form-field>\n                        <mat-label>Repetir Senha</mat-label>\n                        <input matInput\n                               formControlName=\"repeatPassword\"\n                               [(ngModel)]=\"_repeatPassword\"\n                               type=\"password\"\n\n                               [errorStateMatcher]=\"matcher\"\n                               [formControl]=\"_myFormRecoveryPassword.controls.repeatPassword\"\n                               placeholder=\"Entre com sua senha\">\n\n                        <mat-error *ngIf=\"_myFormRecoveryPassword.controls.repeatPassword.hasError('required')\">\n                            Este campo é obrigatório\n                        </mat-error>\n                        <mat-error *ngIf=\"_myFormRecoveryPassword.controls.repeatPassword.hasError('mismatchedPassword')\">\n                            Senhas diferente\n                        </mat-error>\n                    </mat-form-field>\n            </mat-card-content>\n\n            <mat-card-actions align=\"end\">\n                <a routerLink=\"/home\" mat-button>Cancelar</a>\n                <div class=\"space\"></div>\n                <button mat-button\n                        [type]=\"submit\"\n                        [disabled]=\"_myFormRecoveryPassword.invalid\">Reset a senha</button>\n            </mat-card-actions>\n        </form>\n    </mat-card>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/recovery-password/recovery-password.component.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/components/recovery-password/recovery-password.component.ts ***!
+  \*****************************************************************************/
+/*! exports provided: RecoveryPasswordComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecoveryPasswordComponent", function() { return RecoveryPasswordComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var RecoveryPasswordComponent = /** @class */ (function () {
+    function RecoveryPasswordComponent(route, formBuilder) {
+        this.route = route;
+        this.hide = true;
+        this._myFormRecoveryPassword = formBuilder.group({
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(8)
+                ])
+            ]),
+            repeatPassword: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+                this.matchPassword
+            ])
+        });
+    }
+    RecoveryPasswordComponent.prototype.ngOnInit = function () {
+        this.route.params
+            .subscribe(function (data) { return console.log(data); });
+    };
+    RecoveryPasswordComponent.prototype.matchPassword = function (input) {
+        return !input.root || !input.root.controls ?
+            null :
+            input.value !== input.root.controls.password.value ?
+                { mismatchedPassword: true } :
+                null;
+    };
+    RecoveryPasswordComponent.prototype.ngOnDestroy = function () { };
+    RecoveryPasswordComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-recovery-password',
+            template: __webpack_require__(/*! ./recovery-password.component.html */ "./src/app/components/recovery-password/recovery-password.component.html"),
+            styles: [__webpack_require__(/*! ./recovery-password.component.css */ "./src/app/components/recovery-password/recovery-password.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
+    ], RecoveryPasswordComponent);
+    return RecoveryPasswordComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/table/table.component.css":
 /*!******************************************************!*\
   !*** ./src/app/components/table/table.component.css ***!
@@ -1151,7 +1264,7 @@ var TableComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Garçom</h2>\n\n<form [formGroup]=\"_myForm\" (submit)=\"addWaiterAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field>\n            <mat-label>Nome Completo</mat-label>\n            <input matInput\n                   autocomplete=\"false\"\n                   [(ngModel)]=\"waiter.name\"\n                   name=\"name\"\n\n                   (keyup)=\"applyName($event.target.value)\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"name\"\n                   [formControl]=\"_myForm.controls.name\"\n                   placeholder=\"Nome Completo\">\n\n            <mat-error *ngIf=\"_myForm.controls.name.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field>\n            <mat-label>Nome de usuário (nome.sobrenome)</mat-label>\n            <input matInput\n                   [(ngModel)]=\"waiter.username\"\n                   name=\"username\"\n\n                   [readonly]=\"readonly\"\n                   (ngModelChange)=\"usernameValidation($event)\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"username\"\n                   [formControl]=\"_myForm.controls.username\"\n                   placeholder=\"Nome de usuário (nome.sobrenome)\">\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('minlength')\">\n                Este campo deve ter no mínimo 6 caracteres\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('pattern')\">\n                Este campo deve ter um . entre os nomes\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('usernameExist')\">\n                Este nome de usuário já existe, insira outro.\n            </mat-error>\n        </mat-form-field>\n\n        <div style=\"margin: 30px;\" *ngIf=\"!waiter._id\">\n            <p>A senha será padrão (<b>SERVEJA</b>) para o primeiro acesso</p>\n        </div>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"end\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">Salvar Garçom!</button>\n    </mat-dialog-actions>\n</form>\n"
+module.exports = "<h2 mat-dialog-title>Garçom</h2>\n\n<form [formGroup]=\"_myForm\" (submit)=\"addWaiterAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field>\n            <mat-label>Nome Completo</mat-label>\n            <input matInput\n                   autocomplete=\"off\"\n                   [(ngModel)]=\"waiter.name\"\n                   name=\"name\"\n\n                   (keyup)=\"applyName($event.target.value)\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"name\"\n                   [formControl]=\"_myForm.controls.name\"\n                   placeholder=\"Nome Completo\">\n\n            <mat-error *ngIf=\"_myForm.controls.name.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field>\n            <mat-label>Nome de usuário (nome.sobrenome)</mat-label>\n            <input matInput\n                   [(ngModel)]=\"waiter.username\"\n                   name=\"username\"\n\n                   [readonly]=\"readonly\"\n                   (ngModelChange)=\"usernameValidation($event)\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"username\"\n                   [formControl]=\"_myForm.controls.username\"\n                   placeholder=\"Nome de usuário (nome.sobrenome)\">\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('minlength')\">\n                Este campo deve ter no mínimo 6 caracteres\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('pattern')\">\n                Este campo deve ter um . entre os nomes\n            </mat-error>\n\n            <mat-error *ngIf=\"_myForm.controls.username.hasError('usernameExist')\">\n                Este nome de usuário já existe, insira outro.\n            </mat-error>\n        </mat-form-field>\n\n        <div style=\"margin: 30px;\" *ngIf=\"!waiter._id\">\n            <p>A senha será padrão (<b>SERVEJA</b>) para o primeiro acesso</p>\n        </div>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"end\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">Salvar Garçom!</button>\n    </mat-dialog-actions>\n</form>\n"
 
 /***/ }),
 
@@ -1173,7 +1286,7 @@ module.exports = ".mat-form-field {\n  font-size: 14px;\n  width: 100%; }\n\n/*#
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"header\">\n    <div><p>Administre abaixo os seus <b>Garçons</b></p></div>\n    <div class=\"space\"></div>\n    <div>\n        <button mat-raised-button (click)=\"addWaiter()\">Inserir garçom</button>\n    </div>\n</div>\n\n<div class=\"content\">\n    <mat-form-field *ngIf=\"listWaterArray.data.length > 0\">\n        <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Pesquise aqui\">\n        <mat-icon matSuffix mat-icon-button>search</mat-icon>\n    </mat-form-field>\n\n    <div class=\"mat-elevation-z8\">\n        <div *ngIf=\"listWaterArray.data.length > 0\">\n            <table mat-table [class.isMobile]=\"isMobile\" [dataSource]=\"listWaterArray\" matSort>\n                <!-- name column -->\n                <ng-container matColumnDef=\"name\">\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome</th>\n                    <td mat-cell *matCellDef=\"let row\">\n                        <div class=\"mobile-label\"><p>nome:</p></div>\n                        <div class=\"mobile-label-value\"><p>{{row.name}}</p></div>\n                    </td>\n                </ng-container>\n\n                <!-- username column -->\n                <ng-container matColumnDef=\"username\">\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>usuário</th>\n                    <td mat-cell *matCellDef=\"let row\">\n                        <div class=\"mobile-label\"><p>usuário:</p></div>\n                        <div class=\"mobile-label-value\"><p>{{row.username}}</p></div>\n                    </td>\n                </ng-container>\n\n                <!-- edit column -->\n                <ng-container matColumnDef=\"actions\">\n                    <th mat-header-cell *matHeaderCellDef></th>\n                    <td mat-cell *matCellDef=\"let row\" >\n                        <div class=\"mobile-label-actions\">\n                            <button (click)=\"addWaiter(row)\" mat-icon-button>\n                                <mat-icon aria-label=\"edit\">edit</mat-icon>\n                            </button>\n                            <button (click)=\"confirmDelete(row)\" mat-icon-button>\n                                <mat-icon aria-label=\"delete\">delete</mat-icon>\n                            </button>\n                            <button (click)=\"confirmResetPassword(row)\" mat-raised-button color=\"primary\">Resetar Senha</button>\n                        </div>\n                    </td>\n                </ng-container>\n\n                <!-- header -->\n                <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n                <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n            </table>\n\n            <mat-paginator [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\n        </div>\n\n        <div class=\"data-table-nothing\" *ngIf=\"listWaterArray.data.length === 0\">\n            <p>Não existem garçons cadastrados :( </p>\n            <p><button mat-button (click)=\"addWaiter()\">CLIQUE AQUI</button>para incluir um novo garçom!</p>\n        </div>\n    </div>\n</div>\n"
+module.exports = "<div class=\"header\">\n    <div><p>Administre abaixo os seus <b>Garçons</b></p></div>\n    <div class=\"space\"></div>\n    <div>\n        <button mat-raised-button (click)=\"addWaiter()\">Inserir garçom</button>\n    </div>\n</div>\n\n<div class=\"container\">\n    <mat-form-field *ngIf=\"listWaterArray.data.length > 0\">\n        <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Pesquise aqui\">\n        <mat-icon matSuffix mat-icon-button>search</mat-icon>\n    </mat-form-field>\n\n    <div class=\"mat-elevation-z8\">\n        <div *ngIf=\"listWaterArray.data.length > 0\">\n            <table mat-table [class.isMobile]=\"isMobile\" [dataSource]=\"listWaterArray\" matSort>\n                <!-- name column -->\n                <ng-container matColumnDef=\"name\">\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>nome</th>\n                    <td mat-cell *matCellDef=\"let row\">\n                        <div class=\"mobile-label\"><p>nome:</p></div>\n                        <div class=\"mobile-label-value\"><p>{{row.name}}</p></div>\n                    </td>\n                </ng-container>\n\n                <!-- username column -->\n                <ng-container matColumnDef=\"username\">\n                    <th mat-header-cell *matHeaderCellDef mat-sort-header>usuário</th>\n                    <td mat-cell *matCellDef=\"let row\">\n                        <div class=\"mobile-label\"><p>usuário:</p></div>\n                        <div class=\"mobile-label-value\"><p>{{row.username}}</p></div>\n                    </td>\n                </ng-container>\n\n                <!-- edit column -->\n                <ng-container matColumnDef=\"actions\">\n                    <th mat-header-cell *matHeaderCellDef></th>\n                    <td mat-cell *matCellDef=\"let row\" >\n                        <div class=\"mobile-label-actions\">\n                            <button (click)=\"addWaiter(row)\" mat-icon-button>\n                                <mat-icon aria-label=\"edit\">edit</mat-icon>\n                            </button>\n                            <button (click)=\"confirmDelete(row)\" mat-icon-button>\n                                <mat-icon aria-label=\"delete\">delete</mat-icon>\n                            </button>\n                            <button (click)=\"confirmResetPassword(row)\" mat-raised-button color=\"primary\">Resetar Senha</button>\n                        </div>\n                    </td>\n                </ng-container>\n\n                <!-- header -->\n                <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n                <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n            </table>\n\n            <mat-paginator [pageSizeOptions]=\"[5, 10, 25, 100]\"></mat-paginator>\n        </div>\n\n        <div class=\"data-table-nothing\" *ngIf=\"listWaterArray.data.length === 0\">\n            <p>Não existem garçons cadastrados :( </p>\n            <p><button mat-button (click)=\"addWaiter()\">CLIQUE AQUI</button>para incluir um novo garçom!</p>\n        </div>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -1363,7 +1476,7 @@ var AddWaiterDialogComponent = /** @class */ (function () {
         this._waiterService.saveWaiter(this.waiter, this._place)
             .subscribe(function (data) {
             data.status ?
-                (_this._helperService.openSnackBar('Garçom inserido com sucesso!', 'OK'),
+                (_this._helperService.openSnackBar('Garçom salvo com sucesso!', 'OK'),
                     _this.onNoClick()) :
                 _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
         }, function () { return _this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'); });
@@ -1596,6 +1709,9 @@ var AuthService = /** @class */ (function () {
                 _this.setSession(data) :
                 Object(rxjs_internal_observable_throwError__WEBPACK_IMPORTED_MODULE_7__["throwError"])(_this._helpers.openSnackBar(data.message, 'OK'));
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function () { return _this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'); }));
+    };
+    AuthService.prototype.recoveryPassword = function (email) {
+        return this._http.post(this._apiService.url + 'web/recoveryPasswordSend', { email: email });
     };
     AuthService.prototype.setSession = function (authResult) {
         localStorage.setItem('token', authResult.token);

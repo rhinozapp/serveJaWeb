@@ -159,7 +159,7 @@ export class AddWaiterDialogComponent {
         this._waiterService.saveWaiter(this.waiter, this._place)
             .subscribe((data : any) => {
                 data.status ?
-                    (this._helperService.openSnackBar('Garçom inserido com sucesso!', 'OK'),
+                    (this._helperService.openSnackBar('Garçom salvo com sucesso!', 'OK'),
                         this.onNoClick()) :
                     this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK');
             }, () => this._helperService.openSnackBar('Algo de errado aconteceu, tente novamente', 'OK'));

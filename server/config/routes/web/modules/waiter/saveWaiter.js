@@ -8,12 +8,15 @@ exports.saveWaiter = function (req, res) {
 
     waiter.findOneAndUpdate({
         _id: mongoose.Types.ObjectId(reqWaiter._id)
-    }, {
+    }, reqWaiter._id ? {
+        name : reqWaiter.name
+    } : {
         placeID : mongoose.Types.ObjectId(reqPlace.id),
         name : reqWaiter.name,
         username : reqWaiter.username,
-        password : bcrypt.hashSync('SERVEJA', salt)
-    }, {
+        password : bcrypt.hashSync('SERVEJA', salt),
+        resetPassword : true
+    } , {
         multi : false,
         upsert : true,
         new : true

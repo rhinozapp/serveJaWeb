@@ -1,0 +1,30 @@
+/*Toolbar*/
+.my-toolbar-icon {
+    padding: 0 14px;
+}
+
+.my-toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-form-field{
+    width: 100%;
+}
+
+.mat-icon{
+    margin-top: -3px;
+}
+
+.menuVertical{
+    display: none !important;
+}
+
+@media (max-width: 815px) {
+    .menuHorizontal{
+        display: none !important;
+    }
+
+    .menuVertical{
+        display: flex !important;
+    }
+}

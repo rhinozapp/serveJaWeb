@@ -1,20 +1,20 @@
 exports.recoveryPasswordSend = function (req, res) {
     let mongoose = require('mongoose'),
-        userModel = mongoose.model('userAdmin'),
+        place = mongoose.model('place'),
         bcrypt = require('bcrypt'),
         salt = bcrypt.genSaltSync(10),
-        passwordHash = bcrypt.hashSync(req.body.recoveryEmail, salt),
+        passwordHash = bcrypt.hashSync(req.body.email, salt),
         sendEmail = require('../../app/helpers/emailSender');
 
-    userModel.find({ email: req.body.recoveryEmail }, function(err, user) {
+    place.find({ email: req.body.email }, function(err, user) {
         if (err){
             res.json({status : false});
         }else if(user.length === 0) {
             res.json({status : false});
         }else{
 
-            userModel.update({
-                email : req.body.recoveryEmail
+            place.update({
+                email : req.body.email
             }, {
                 hashRecovery : passwordHash.replace('-', '')
             }, {
@@ -22,10 +22,10 @@ exports.recoveryPasswordSend = function (req, res) {
             }, function () {
                 sendEmail.emailSend(
                     'rhinozapp@gmail.com',
-                    req.body.recoveryEmail,
+                    req.body.email,
                     'Recuperação de senha',
-                    'Recupere sua senha <a href="localhost/#/recoveryPassword/'+passwordHash.replace('-', '')+'">aqui</a>',
-                    'Recupere sua senha <a href="localhost/#/recoveryPassword/'+passwordHash.replace('-', '')+'">aqui</a>');
+                    'Recupere sua senha <a href="localhost/recoveryPassword/'+passwordHash.replace('-', '')+'">aqui</a>',
+                    'Recupere sua senha <a href="localhost/recoveryPassword/'+passwordHash.replace('-', '')+'">aqui</a>');
 
                 res.json({
                     status : true

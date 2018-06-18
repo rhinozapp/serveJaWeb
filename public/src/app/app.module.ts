@@ -27,6 +27,7 @@ import {AddWaiterDialogComponent, WaiterComponent} from './components/waiter/wai
 import { OrderComponent } from './components/order/order.component';
 import {WaiterService} from "./services/waiter/waiter.service";
 import { DialogConfirmComponent } from './components/helpers/dialog-confirm/dialog-confirm.component';
+import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { DialogConfirmComponent } from './components/helpers/dialog-confirm/dial
         WaiterComponent,
         OrderComponent,
         AddWaiterDialogComponent,
-        DialogConfirmComponent
+        DialogConfirmComponent,
+        RecoveryPasswordComponent
     ],
     entryComponents : [
         LoginDialogComponent,

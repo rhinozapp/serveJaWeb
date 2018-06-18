@@ -9,6 +9,7 @@ import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {WaiterComponent} from "./components/waiter/waiter.component";
 import {TableComponent} from "./components/table/table.component";
 import {OrderComponent} from "./components/order/order.component";
+import {RecoveryPasswordComponent} from "./components/recovery-password/recovery-password.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'waiter', component : WaiterComponent, canActivate: [AuthGuard]},
     { path: 'table', component : TableComponent, canActivate: [AuthGuard]},
     { path: 'order', component : OrderComponent, canActivate: [AuthGuard]},
+    { path: 'recoveryPassword/:h', component : RecoveryPasswordComponent},
     { path: '**', redirectTo: '/home' }
 ];
 
