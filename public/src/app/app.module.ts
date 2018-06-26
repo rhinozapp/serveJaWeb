@@ -28,6 +28,7 @@ import { OrderComponent } from './components/order/order.component';
 import {WaiterService} from "./services/waiter/waiter.service";
 import { DialogConfirmComponent } from './components/helpers/dialog-confirm/dialog-confirm.component';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
+import {RecoveryPasswordService} from "./services/recoveryPassword/recovery-password.service";
 
 @NgModule({
     declarations: [
@@ -116,6 +117,7 @@ import { RecoveryPasswordComponent } from './components/recovery-password/recove
         AuthService,
         AuthGuard,
         WaiterService,
+        RecoveryPasswordService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

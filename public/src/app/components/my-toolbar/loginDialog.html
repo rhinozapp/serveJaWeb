@@ -59,61 +59,6 @@
     </mat-dialog-actions>
 </form>
 
-<!-- LOGIN WAITER -->
-<form *ngIf="loginWaiter && !recoveryPassword"
-      [formGroup]="_myForm"
-      (submit)="loginAction(); false;">
-    <mat-dialog-content align="center">
-        <mat-form-field appearance="outline">
-            <mat-label>E-mail</mat-label>
-            <input matInput
-                   [(ngModel)]="_email"
-                   name="email"
-
-                   [errorStateMatcher]="matcher"
-                   formControlName="email"
-                   [formControl]="_myForm.controls.email"
-                   placeholder="Entre com seu e-mail"
-                   required>
-            <mat-icon matSuffix>person</mat-icon>
-
-            <mat-error *ngIf="_myForm.controls.email.hasError('email')">
-                Digite um e-mail válido
-            </mat-error>
-            <mat-error *ngIf="_myForm.controls.email.hasError('required')">
-                Este campo é obrigatório
-            </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input matInput
-                   [(ngModel)]="_password"
-                   type="password"
-                   name="password"
-
-                   formControlName="password"
-                   [formControl]="_myForm.controls.password"
-                   placeholder="Entre com sua senha">
-            <mat-icon matSuffix>vpn_key</mat-icon>
-
-            <mat-error *ngIf="_myForm.controls.password.hasError('required')">
-                Este campo é obrigatório
-            </mat-error>
-        </mat-form-field>
-    </mat-dialog-content>
-
-    <mat-dialog-actions align="start">
-        <button mat-button
-                mat-dialog-close>Cancelar</button>
-        <a mat-button (click)="loginWaiter = false; recoveryPassword = false">Logar como Estabelecimento</a>
-        <div class="space"></div>
-        <button mat-button
-                [type]="submit"
-                [disabled]="_myForm.invalid">GO!</button>
-    </mat-dialog-actions>
-</form>
-
 <!-- RESET PASSWORD -->
 <form *ngIf="!loginWaiter && recoveryPassword"
       [formGroup]="_myFormRecoveryPassword"
@@ -152,5 +97,60 @@
         <button mat-button
                 [type]="submit"
                 [disabled]="_myFormRecoveryPassword.invalid">Resetar senha</button>
+    </mat-dialog-actions>
+</form>
+
+<!-- LOGIN WAITER -->
+<form *ngIf="loginWaiter && !recoveryPassword"
+      [formGroup]="_myFormLoginWaiter"
+      (submit)="loginAction(); false;">
+    <mat-dialog-content align="center">
+        <mat-form-field appearance="outline">
+            <mat-label>Nome de usuário</mat-label>
+            <input matInput
+                   [(ngModel)]="_username"
+                   name="username"
+
+                   [errorStateMatcher]="matcher"
+                   formControlName="username"
+                   [formControl]="_myFormLoginWaiter.controls.username"
+                   placeholder="Entre com seu e-mail"
+                   required>
+            <mat-icon matSuffix>person</mat-icon>
+
+            <mat-error *ngIf="_myFormLoginWaiter.controls.username.hasError('usernameNotFound')">
+                Este usuário não existe
+            </mat-error>
+            <mat-error *ngIf="_myFormLoginWaiter.controls.username.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput
+                   [(ngModel)]="_passwordWaiter"
+                   type="password"
+                   name="password"
+
+                   formControlName="password"
+                   [formControl]="_myFormLoginWaiter.controls.password"
+                   placeholder="Entre com sua senha">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+
+            <mat-error *ngIf="_myFormLoginWaiter.controls.password.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="start">
+        <button mat-button
+                mat-dialog-close>Cancelar</button>
+        <a mat-button (click)="loginWaiter = false; recoveryPassword = false">Logar como Estabelecimento</a>
+        <div class="space"></div>
+        <button mat-button
+                [type]="submit"
+                [disabled]="_myFormLoginWaiter.invalid">GO!</button>
     </mat-dialog-actions>
 </form>

@@ -1,6 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {RecoveryPasswordService} from "../../services/recoveryPassword/recovery-password.service";
+import {HelpersService} from "../../services/helpers/helpers.service";
 
 @Component({
     selector: 'app-recovery-password',
@@ -8,13 +10,18 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
     styleUrls: ['./recovery-password.component.css']
 })
 export class RecoveryPasswordComponent implements OnInit, OnDestroy {
-    private _repeatPassword : String;
+    private _repeatPassword : string;
+    private password : string;
     private _myFormRecoveryPassword : FormGroup;
+    private _hash : string;
 
     public hide : boolean = true;
 
     constructor(private route : ActivatedRoute,
-                formBuilder : FormBuilder) {
+                formBuilder : FormBuilder,
+                private _recoveryPasswordService : RecoveryPasswordService,
+                private _router : Router,
+                private _helper : HelpersService) {
         this._myFormRecoveryPassword = formBuilder.group({
             password : new FormControl('', [
                 Validators.compose([
@@ -30,8 +37,32 @@ export class RecoveryPasswordComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.checkParams();
+    }
+
+    checkParams(){
         this.route.params
-            .subscribe((data : any) => console.log(data));
+            .subscribe((data : any) => {
+                this._hash = data.h;
+                data.h ?
+                    this._recoveryPasswordService.recoveryPasswordGetHash(data.h)
+                        .subscribe((data : any) => {
+                            !data.status ?
+                                (this._helper.snackBar.open('Este link não está mais ativo!', 'OK'), this._router.navigate(['/'])) : false;
+
+                        }, () => this._helper.snackBar.open('Algo de errado aconteceu, tente novamente.', 'OK')) : false;
+            });
+    }
+
+    resetPasswordAction(){
+        this._recoveryPasswordService.recoveryPassword({
+            hashRecovery : this._hash,
+            password: this.password
+        }).subscribe((data : any) => {
+            data.status ?
+                (this._helper.snackBar.open('Você resetou sua senha! Faça o login com a nova senha.', 'OK'), this._router.navigate(['/'])) :
+                (this._helper.snackBar.open('Algo de errado aconteceu, tente novamente.', 'OK'));
+        }, () => (this._helper.snackBar.open('Algo de errado aconteceu, tente novamente.', 'OK'), this._router.navigate(['/'])));
     }
 
     matchPassword(input: AbstractControl) : { [key: string]: any }{

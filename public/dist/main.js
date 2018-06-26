@@ -194,12 +194,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./services/waiter/waiter.service */ "./src/app/services/waiter/waiter.service.ts");
 /* harmony import */ var _components_helpers_dialog_confirm_dialog_confirm_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/helpers/dialog-confirm/dialog-confirm.component */ "./src/app/components/helpers/dialog-confirm/dialog-confirm.component.ts");
 /* harmony import */ var _components_recovery_password_recovery_password_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/recovery-password/recovery-password.component */ "./src/app/components/recovery-password/recovery-password.component.ts");
+/* harmony import */ var _services_recoveryPassword_recovery_password_service__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./services/recoveryPassword/recovery-password.service */ "./src/app/services/recoveryPassword/recovery-password.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -320,6 +322,7 @@ var AppModule = /** @class */ (function () {
                 _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthService"],
                 _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthGuard"],
                 _services_waiter_waiter_service__WEBPACK_IMPORTED_MODULE_26__["WaiterService"],
+                _services_recoveryPassword_recovery_password_service__WEBPACK_IMPORTED_MODULE_29__["RecoveryPasswordService"],
                 {
                     provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_12__["HTTP_INTERCEPTORS"],
                     useClass: _services_auth_auth_service__WEBPACK_IMPORTED_MODULE_16__["AuthInterceptor"],
@@ -606,7 +609,7 @@ var MenuComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>\n    <b>{{loginWaiter ? 'Entrar como Garçom' : recoveryPassword ? 'Resetar Senha' : 'Entrar como Estabelecimento'}}</b>\n</h2>\n\n<!--LOGIN PLACE-->\n<form *ngIf=\"!loginWaiter && !recoveryPassword\"\n      [formGroup]=\"_myFormLoginPlace\"\n      (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myFormLoginPlace.controls.email\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_password\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myFormLoginPlace.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <div><a (click)=\"recoveryPassword = true; loginWaiter = false\">Esqueci a minha senha</a></div>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = true; recoveryPassword = false\">Logar como Garçom</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormLoginPlace.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n\n<!-- LOGIN WAITER -->\n<form *ngIf=\"loginWaiter && !recoveryPassword\"\n      [formGroup]=\"_myForm\"\n      (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myForm.controls.email\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myForm.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_password\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myForm.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myForm.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = false; recoveryPassword = false\">Logar como Estabelecimento</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myForm.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n\n<!-- RESET PASSWORD -->\n<form *ngIf=\"!loginWaiter && recoveryPassword\"\n      [formGroup]=\"_myFormRecoveryPassword\"\n      (submit)=\"recoveryPasswordAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myFormRecoveryPassword.controls.email\"\n                   placeholder=\"E-mail\"\n                   required>\n            <mat-icon matSuffix>email</mat-icon>\n\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('required')\">\n                Digite seu e-mail, enviaremos um link para reset de sua senha\n            </mat-error>\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('invalidEmail')\">\n                Este E-mail não está cadastrado conosco\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = false; recoveryPassword = false\">Voltar para o Login</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormRecoveryPassword.invalid\">Resetar senha</button>\n    </mat-dialog-actions>\n</form>\n"
+module.exports = "<h2 mat-dialog-title>\n    <b>{{loginWaiter ? 'Entrar como Garçom' : recoveryPassword ? 'Resetar Senha' : 'Entrar como Estabelecimento'}}</b>\n</h2>\n\n<!--LOGIN PLACE-->\n<form *ngIf=\"!loginWaiter && !recoveryPassword\"\n      [formGroup]=\"_myFormLoginPlace\"\n      (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myFormLoginPlace.controls.email\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.email.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_password\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myFormLoginPlace.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginPlace.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <div><a (click)=\"recoveryPassword = true; loginWaiter = false\">Esqueci a minha senha</a></div>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = true; recoveryPassword = false\">Logar como Garçom</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormLoginPlace.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n\n<!-- RESET PASSWORD -->\n<form *ngIf=\"!loginWaiter && recoveryPassword\"\n      [formGroup]=\"_myFormRecoveryPassword\"\n      (submit)=\"recoveryPasswordAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>E-mail</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_email\"\n                   name=\"email\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"email\"\n                   [formControl]=\"_myFormRecoveryPassword.controls.email\"\n                   placeholder=\"E-mail\"\n                   required>\n            <mat-icon matSuffix>email</mat-icon>\n\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('email')\">\n                Digite um e-mail válido\n            </mat-error>\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('required')\">\n                Digite seu e-mail, enviaremos um link para reset de sua senha\n            </mat-error>\n            <mat-error *ngIf=\"_myFormRecoveryPassword.controls.email.hasError('invalidEmail')\">\n                Este E-mail não está cadastrado conosco\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = false; recoveryPassword = false\">Voltar para o Login</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormRecoveryPassword.invalid\">Resetar senha</button>\n    </mat-dialog-actions>\n</form>\n\n<!-- LOGIN WAITER -->\n<form *ngIf=\"loginWaiter && !recoveryPassword\"\n      [formGroup]=\"_myFormLoginWaiter\"\n      (submit)=\"loginAction(); false;\">\n    <mat-dialog-content align=\"center\">\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Nome de usuário</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_username\"\n                   name=\"username\"\n\n                   [errorStateMatcher]=\"matcher\"\n                   formControlName=\"username\"\n                   [formControl]=\"_myFormLoginWaiter.controls.username\"\n                   placeholder=\"Entre com seu e-mail\"\n                   required>\n            <mat-icon matSuffix>person</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginWaiter.controls.username.hasError('usernameNotFound')\">\n                Este usuário não existe\n            </mat-error>\n            <mat-error *ngIf=\"_myFormLoginWaiter.controls.username.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n\n        <mat-form-field appearance=\"outline\">\n            <mat-label>Senha</mat-label>\n            <input matInput\n                   [(ngModel)]=\"_passwordWaiter\"\n                   type=\"password\"\n                   name=\"password\"\n\n                   formControlName=\"password\"\n                   [formControl]=\"_myFormLoginWaiter.controls.password\"\n                   placeholder=\"Entre com sua senha\">\n            <mat-icon matSuffix>vpn_key</mat-icon>\n\n            <mat-error *ngIf=\"_myFormLoginWaiter.controls.password.hasError('required')\">\n                Este campo é obrigatório\n            </mat-error>\n        </mat-form-field>\n    </mat-dialog-content>\n\n    <mat-dialog-actions align=\"start\">\n        <button mat-button\n                mat-dialog-close>Cancelar</button>\n        <a mat-button (click)=\"loginWaiter = false; recoveryPassword = false\">Logar como Estabelecimento</a>\n        <div class=\"space\"></div>\n        <button mat-button\n                [type]=\"submit\"\n                [disabled]=\"_myFormLoginWaiter.invalid\">GO!</button>\n    </mat-dialog-actions>\n</form>\n"
 
 /***/ }),
 
@@ -735,6 +738,14 @@ var LoginDialogComponent = /** @class */ (function () {
             email: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].email
+            ])
+        });
+        this._myFormLoginWaiter = formBuilder.group({
+            username: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
+            ]),
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
             ])
         });
     }
@@ -1137,6 +1148,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_recoveryPassword_recovery_password_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/recoveryPassword/recovery-password.service */ "./src/app/services/recoveryPassword/recovery-password.service.ts");
+/* harmony import */ var _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/helpers/helpers.service */ "./src/app/services/helpers/helpers.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1149,9 +1162,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var RecoveryPasswordComponent = /** @class */ (function () {
-    function RecoveryPasswordComponent(route, formBuilder) {
+    function RecoveryPasswordComponent(route, formBuilder, _recoveryPasswordService, _router, _helper) {
         this.route = route;
+        this._recoveryPasswordService = _recoveryPasswordService;
+        this._router = _router;
+        this._helper = _helper;
         this.hide = true;
         this._myFormRecoveryPassword = formBuilder.group({
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
@@ -1167,8 +1185,31 @@ var RecoveryPasswordComponent = /** @class */ (function () {
         });
     }
     RecoveryPasswordComponent.prototype.ngOnInit = function () {
+        this.checkParams();
+    };
+    RecoveryPasswordComponent.prototype.checkParams = function () {
+        var _this = this;
         this.route.params
-            .subscribe(function (data) { return console.log(data); });
+            .subscribe(function (data) {
+            _this._hash = data.h;
+            data.h ?
+                _this._recoveryPasswordService.recoveryPasswordGetHash(data.h)
+                    .subscribe(function (data) {
+                    !data.status ?
+                        (_this._helper.snackBar.open('Este link não está mais ativo!', 'OK'), _this._router.navigate(['/'])) : false;
+                }, function () { return _this._helper.snackBar.open('Algo de errado aconteceu, tente novamente.', 'OK'); }) : false;
+        });
+    };
+    RecoveryPasswordComponent.prototype.resetPasswordAction = function () {
+        var _this = this;
+        this._recoveryPasswordService.recoveryPassword({
+            hashRecovery: this._hash,
+            password: this.password
+        }).subscribe(function (data) {
+            data.status ?
+                (_this._helper.snackBar.open('Você resetou sua senha! Faça o login com a nova senha.', 'OK'), _this._router.navigate(['/'])) :
+                (_this._helper.snackBar.open('Algo de errado aconteceu, tente novamente.', 'OK'));
+        }, function () { return (_this._helper.snackBar.open('Algo de errado aconteceu, tente novamente.', 'OK'), _this._router.navigate(['/'])); });
     };
     RecoveryPasswordComponent.prototype.matchPassword = function (input) {
         return !input.root || !input.root.controls ?
@@ -1185,7 +1226,10 @@ var RecoveryPasswordComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./recovery-password.component.css */ "./src/app/components/recovery-password/recovery-password.component.css")]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
+            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
+            _services_recoveryPassword_recovery_password_service__WEBPACK_IMPORTED_MODULE_3__["RecoveryPasswordService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _services_helpers_helpers_service__WEBPACK_IMPORTED_MODULE_4__["HelpersService"]])
     ], RecoveryPasswordComponent);
     return RecoveryPasswordComponent;
 }());
@@ -1923,6 +1967,54 @@ var PlaceService = /** @class */ (function () {
             _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], PlaceService);
     return PlaceService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/recoveryPassword/recovery-password.service.ts":
+/*!************************************************************************!*\
+  !*** ./src/app/services/recoveryPassword/recovery-password.service.ts ***!
+  \************************************************************************/
+/*! exports provided: RecoveryPasswordService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecoveryPasswordService", function() { return RecoveryPasswordService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _api_service_api_service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api-service/api-service.service */ "./src/app/services/api-service/api-service.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var RecoveryPasswordService = /** @class */ (function () {
+    function RecoveryPasswordService(_http, _apiService) {
+        this._http = _http;
+        this._apiService = _apiService;
+    }
+    RecoveryPasswordService.prototype.recoveryPasswordGetHash = function (hashRecovery) {
+        return this._http.post(this._apiService.url + 'web/recoveryPasswordGetHash', { hashRecovery: hashRecovery });
+    };
+    RecoveryPasswordService.prototype.recoveryPassword = function (data) {
+        return this._http.post(this._apiService.url + 'web/recoveryPassword', data);
+    };
+    RecoveryPasswordService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _api_service_api_service_service__WEBPACK_IMPORTED_MODULE_2__["ApiServiceService"]])
+    ], RecoveryPasswordService);
+    return RecoveryPasswordService;
 }());
 
 

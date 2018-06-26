@@ -1,10 +1,10 @@
 exports.recoveryPassword = function (req, res) {
     let mongoose = require('mongoose'),
-        userModel = mongoose.model('userAdmin'),
+        place = mongoose.model('place'),
         bcrypt = require('bcrypt'),
         salt = bcrypt.genSaltSync(10);
 
-    userModel.update({
+    place.update({
         hashRecovery : req.body.hashRecovery
     }, {
         password : bcrypt.hashSync(req.body.password, salt),

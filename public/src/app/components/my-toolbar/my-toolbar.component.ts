@@ -57,11 +57,14 @@ export class LoginDialogComponent {
 
     private _email : string;
     private _password : string;
-    private _myFormLoginPlace : FormGroup;
-    private _myFormRecoveryPassword : FormGroup;
-    private _myForm : FormGroup;
+    private _passwordWaiter : string;
+    private _username : string;
     public loginWaiter : boolean = false;
     public recoveryPassword : boolean = false;
+
+    private _myFormLoginPlace : FormGroup;
+    private _myFormRecoveryPassword : FormGroup;
+    private _myFormLoginWaiter : FormGroup;
 
     constructor(
         public dialogRef: MatDialogRef<LoginDialogComponent>,
@@ -83,6 +86,14 @@ export class LoginDialogComponent {
             email : new FormControl('', [
                 Validators.required,
                 Validators.email
+            ])
+        });
+        this._myFormLoginWaiter = formBuilder.group({
+            username : new FormControl('', [
+                Validators.required
+            ]),
+            password : new FormControl('', [
+                Validators.required
             ])
         });
     }
