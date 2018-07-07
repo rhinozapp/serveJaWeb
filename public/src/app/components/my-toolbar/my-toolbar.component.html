@@ -10,7 +10,7 @@
         <span>ServeJá</span>
         <span class="my-toolbar-spacer"></span>
 
-        <button mat-button routerLink="/dashboard">
+        <button mat-button routerLink="/dashboard" *ngxPermissionsOnly="['PLACE']">
             <mat-icon aria-label="home">home</mat-icon>
             HOME
         </button>
@@ -18,19 +18,19 @@
             <mat-icon aria-label="home">reorder</mat-icon>
             PEDIDOS
         </button>
-        <button mat-button routerLink="/menu">
+        <button mat-button routerLink="/menu" *ngxPermissionsOnly="['PLACE']">
             <mat-icon aria-label="home">restaurant_menu</mat-icon>
             CARDÁPIOS
         </button>
-        <button mat-button routerLink="/waiter">
+        <button mat-button routerLink="/waiter" *ngxPermissionsOnly="['PLACE']">
             <mat-icon aria-label="home">fastfood</mat-icon>
             GARÇONS
         </button>
-        <button mat-button routerLink="/table">
+        <button mat-button routerLink="/table" *ngxPermissionsOnly="['PLACE']">
             <mat-icon aria-label="home">table_chart</mat-icon>
             MESAS
         </button>
-        <button mat-button routerLink="/profile">
+        <button mat-button routerLink="/profile" *ngxPermissionsOnly="['PLACE']">
             <mat-icon aria-label="home">person</mat-icon>
             PERFIL
         </button>
@@ -48,7 +48,7 @@
             <mat-icon aria-label="menu">menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="/dashboard">
+            <button mat-menu-item routerLink="/dashboard" *ngxPermissionsOnly="['PLACE']">
                 <mat-icon aria-label="home">home</mat-icon>
                 HOME
             </button>
@@ -56,19 +56,19 @@
                 <mat-icon aria-label="home">reorder</mat-icon>
                 PEDIDOS
             </button>
-            <button mat-menu-item routerLink="/menu">
+            <button mat-menu-item routerLink="/menu" *ngxPermissionsOnly="['PLACE']">
                 <mat-icon aria-label="home">restaurant_menu</mat-icon>
                 CARDÁPIOS
             </button>
-            <button mat-menu-item routerLink="/waiter">
+            <button mat-menu-item routerLink="/waiter" *ngxPermissionsOnly="['PLACE']">
                 <mat-icon aria-label="home">fastfood</mat-icon>
                 GARÇONS
             </button>
-            <button mat-menu-item routerLink="/table">
+            <button mat-menu-item routerLink="/table" *ngxPermissionsOnly="['PLACE']">
                 <mat-icon aria-label="home">table_chart</mat-icon>
                 MESAS
             </button>
-            <button mat-menu-item routerLink="/profile">
+            <button mat-menu-item routerLink="/profile" *ngxPermissionsOnly="['PLACE']">
                 <mat-icon aria-label="home">person</mat-icon>
                 PERFIL
             </button>

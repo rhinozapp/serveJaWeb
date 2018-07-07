@@ -29,6 +29,7 @@ import {WaiterService} from "./services/waiter/waiter.service";
 import { DialogConfirmComponent } from './components/helpers/dialog-confirm/dialog-confirm.component';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
 import {RecoveryPasswordService} from "./services/recoveryPassword/recovery-password.service";
+import {NgxPermissionsModule, NgxPermissionsService} from "ngx-permissions";
 
 @NgModule({
     declarations: [
@@ -106,10 +107,12 @@ import {RecoveryPasswordService} from "./services/recoveryPassword/recovery-pass
         JwtModule.forRoot({
             config : { tokenGetter : () => localStorage.getItem('token') }
         }),
-        AppRoutingModule
+        AppRoutingModule,
+        NgxPermissionsModule.forRoot()
     ],
     exports : [],
     providers: [
+        NgxPermissionsService,
         ErrorStateMatcher,
         ApiServiceService,
         PlaceService,

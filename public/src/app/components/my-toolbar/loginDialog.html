@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>
-    <b>{{loginWaiter ? 'Entrar como Garçom' : recoveryPassword ? 'Resetar Senha' : 'Entrar como Estabelecimento'}}</b>
+    <b>{{loginWaiter || firstLoginWaiter ? 'Entrar como Garçom' : recoveryPassword ? 'Resetar Senha' : 'Entrar como Estabelecimento'}}</b>
 </h2>
 
 <!--LOGIN PLACE-->
-<form *ngIf="!loginWaiter && !recoveryPassword"
+<form *ngIf="!loginWaiter && !recoveryPassword && !firstLoginWaiter"
       [formGroup]="_myFormLoginPlace"
       (submit)="loginAction(); false;">
     <mat-dialog-content align="center">
@@ -16,8 +16,7 @@
                    [errorStateMatcher]="matcher"
                    formControlName="email"
                    [formControl]="_myFormLoginPlace.controls.email"
-                   placeholder="Entre com seu e-mail"
-                   required>
+                   placeholder="Entre com seu e-mail">
             <mat-icon matSuffix>person</mat-icon>
 
             <mat-error *ngIf="_myFormLoginPlace.controls.email.hasError('email')">
@@ -60,7 +59,7 @@
 </form>
 
 <!-- RESET PASSWORD -->
-<form *ngIf="!loginWaiter && recoveryPassword"
+<form *ngIf="!loginWaiter && recoveryPassword && !firstLoginWaiter"
       [formGroup]="_myFormRecoveryPassword"
       (submit)="recoveryPasswordAction(); false;">
     <mat-dialog-content align="center">
@@ -73,8 +72,7 @@
                    [errorStateMatcher]="matcher"
                    formControlName="email"
                    [formControl]="_myFormRecoveryPassword.controls.email"
-                   placeholder="E-mail"
-                   required>
+                   placeholder="E-mail">
             <mat-icon matSuffix>email</mat-icon>
 
             <mat-error *ngIf="_myFormRecoveryPassword.controls.email.hasError('email')">
@@ -101,9 +99,9 @@
 </form>
 
 <!-- LOGIN WAITER -->
-<form *ngIf="loginWaiter && !recoveryPassword"
+<form *ngIf="loginWaiter && !recoveryPassword && !firstLoginWaiter"
       [formGroup]="_myFormLoginWaiter"
-      (submit)="loginAction(); false;">
+      (submit)="waiterLoginAction(); false;">
     <mat-dialog-content align="center">
         <mat-form-field appearance="outline">
             <mat-label>Nome de usuário</mat-label>
@@ -114,8 +112,7 @@
                    [errorStateMatcher]="matcher"
                    formControlName="username"
                    [formControl]="_myFormLoginWaiter.controls.username"
-                   placeholder="Entre com seu e-mail"
-                   required>
+                   placeholder="Entre com seu nome de usuário">
             <mat-icon matSuffix>person</mat-icon>
 
             <mat-error *ngIf="_myFormLoginWaiter.controls.username.hasError('usernameNotFound')">
@@ -137,6 +134,7 @@
                    [formControl]="_myFormLoginWaiter.controls.password"
                    placeholder="Entre com sua senha">
             <mat-icon matSuffix>vpn_key</mat-icon>
+            <mat-hint align="start">Caso tenha esquecido sua senha, peça para o administrador do estabelimento resetá-la para você</mat-hint>
 
             <mat-error *ngIf="_myFormLoginWaiter.controls.password.hasError('required')">
                 Este campo é obrigatório
@@ -152,5 +150,64 @@
         <button mat-button
                 [type]="submit"
                 [disabled]="_myFormLoginWaiter.invalid">GO!</button>
+    </mat-dialog-actions>
+</form>
+
+<!-- FIRST LOGIN WAITER -->
+<form *ngIf="!loginWaiter && !recoveryPassword && firstLoginWaiter"
+      [formGroup]="_myFormFirstLoginWaiter"
+      (submit)="changePasswordAndDoLoginWaiter(); false;">
+    <mat-dialog-content align="center">
+        <mat-form-field appearance="outline">
+            <mat-label>Nome de usuário</mat-label>
+            <input matInput
+                   [value]="_username"
+                   readonly>
+            <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Nova Senha</mat-label>
+            <input matInput
+                   [(ngModel)]="_passwordWaiter"
+                   type="password"
+                   name="password"
+
+                   formControlName="password"
+                   [formControl]="_myFormFirstLoginWaiter.controls.password"
+                   placeholder="Entre com sua senha">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+
+            <mat-error *ngIf="_myFormFirstLoginWaiter.controls.password.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Repetir Nova Senha</mat-label>
+            <input matInput
+                   [(ngModel)]="_repeatPasswordWaiter"
+                   type="password"
+                   name="repeatPassword"
+
+                   formControlName="repeatPassword"
+                   [formControl]="_myFormFirstLoginWaiter.controls.repeatPassword"
+                   placeholder="Entre com sua senha">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+
+            <mat-error *ngIf="_myFormFirstLoginWaiter.controls.repeatPassword.hasError('required')">
+                Este campo é obrigatório
+            </mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="start">
+        <button mat-button
+                mat-dialog-close>Cancelar</button>
+        <a mat-button (click)="loginWaiter = false; recoveryPassword = false">Logar como Estabelecimento</a>
+        <div class="space"></div>
+        <button mat-button
+                [type]="submit"
+                [disabled]="_myFormFirstLoginWaiter.invalid">GO!</button>
     </mat-dialog-actions>
 </form>

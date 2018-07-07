@@ -21,6 +21,12 @@ module.exports = function(app) {
     let doLoginWeb = require('./web/modules/auth/doLogin');
     app.post('/web/doLogin', doLoginWeb.doLogin);
 
+    let doLoginWaiterWeb = require('./web/modules/auth/doLoginWaiter');
+    app.post('/web/doLoginWaiter', doLoginWaiterWeb.doLoginWaiter);
+
+    let changePasswordAndDoLoginWaiterWeb = require('./web/modules/auth/changePasswordAndDoLoginWaiter');
+    app.post('/web/changePasswordAndDoLoginWaiter', changePasswordAndDoLoginWaiterWeb.changePasswordAndDoLoginWaiter);
+
     let emailValidationWeb = require('./web/modules/auth/emailValidation');
     app.post('/web/emailValidation', emailValidationWeb.emailValidation);
 

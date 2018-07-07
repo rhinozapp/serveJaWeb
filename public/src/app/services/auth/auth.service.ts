@@ -8,6 +8,10 @@ import {HelpersService} from "../helpers/helpers.service";
 import {CanActivate, Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {throwError} from "rxjs/internal/observable/throwError";
+import {NgxPermissionsService} from "ngx-permissions";
+
+const PERMISSION_PLACE = ['PLACE'];
+const PERMISSION_WAITER = ['WAITER'];
 
 @Injectable()
 export class AuthService {
@@ -15,7 +19,8 @@ export class AuthService {
                 private _http : HttpClient,
                 private _helpers : HelpersService,
                 private _jwtHelperService : JwtHelperService,
-                private _router: Router) { }
+                private _router: Router,
+                private _permissionsService : NgxPermissionsService) { }
 
     doLogin(email, password){
         return this._http
@@ -23,7 +28,7 @@ export class AuthService {
             .pipe(
                 tap((data : any) => {
                     data.status ?
-                        this.setSession(data) :
+                        this.setSession(data, PERMISSION_PLACE) :
                         throwError(this._helpers.openSnackBar(data.message, 'OK'));
                 }),
                 catchError(() : any => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'))
@@ -36,7 +41,35 @@ export class AuthService {
             .pipe(
                 tap((data : any) => {
                     data.status ?
-                        this.setSession(data) :
+                        this.setSession(data, PERMISSION_PLACE) :
+                        throwError(this._helpers.openSnackBar(data.message, 'OK'));
+                }),
+                catchError(() : any => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'))
+            );
+    }
+
+    doLoginWaiter(username, password){
+        return this._http
+            .post(this._apiService.url + 'web/doLoginWaiter', {username, password})
+            .pipe(
+                tap((data : any) => {
+                    !data.status ?
+                        throwError(this._helpers.openSnackBar(data.message, 'OK')) :
+                        data.status && !data.resetPassword ?
+                            this.setSession(data, PERMISSION_WAITER) :
+                            this._helpers.openSnackBar(data.message, 'OK');
+                }),
+                catchError(() : any => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'))
+            );
+    }
+
+    changePasswordWaiter(username, password){
+        return this._http
+            .post(this._apiService.url + 'web/changePasswordAndDoLoginWaiter', {username, password})
+            .pipe(
+                tap((data : any) => {
+                    data.status ?
+                        this.setSession(data, PERMISSION_WAITER) :
                         throwError(this._helpers.openSnackBar(data.message, 'OK'));
                 }),
                 catchError(() : any => this._helpers.openSnackBar('Algo deu errado! Tente novamente', 'OK'))
@@ -47,8 +80,10 @@ export class AuthService {
         return this._http.post(this._apiService.url + 'web/recoveryPasswordSend', {email});
     }
 
-    setSession(authResult) : void{
+    setSession(authResult, permission) : void{
+        this._permissionsService.addPermission(permission);
         localStorage.setItem('token', authResult.token);
+        localStorage.setItem('permission', JSON.stringify(permission));
         this._router.navigate(['/dashboard']);
     }
 
@@ -61,6 +96,7 @@ export class AuthService {
     }
 
     logout(){
+        this._permissionsService.flushPermissions();
         localStorage.removeItem('token');
         this._router.navigate(['/']);
     }
@@ -85,9 +121,11 @@ export class AuthInterceptor implements HttpInterceptor {
 export class AuthGuard implements CanActivate {
 
     constructor(private _auth: AuthService,
-                private _router: Router) {}
+                private _permissionService : NgxPermissionsService) {}
 
     canActivate() {
+        localStorage.getItem('permission') ?
+            this._permissionService.loadPermissions(JSON.parse(localStorage.getItem('permission'))) : false;
         return this._auth.loggedIn() ? true : (this._auth.logout(), false);
     }
 }

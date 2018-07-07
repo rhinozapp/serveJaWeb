@@ -57,14 +57,19 @@ export class LoginDialogComponent {
 
     private _email : string;
     private _password : string;
-    private _passwordWaiter : string;
+
     private _username : string;
+    private _passwordWaiter : string;
+    private _repeatPasswordWaiter : string;
+
     public loginWaiter : boolean = false;
     public recoveryPassword : boolean = false;
+    public firstLoginWaiter : boolean = false;
 
     private _myFormLoginPlace : FormGroup;
     private _myFormRecoveryPassword : FormGroup;
     private _myFormLoginWaiter : FormGroup;
+    private _myFormFirstLoginWaiter : FormGroup;
 
     constructor(
         public dialogRef: MatDialogRef<LoginDialogComponent>,
@@ -96,6 +101,18 @@ export class LoginDialogComponent {
                 Validators.required
             ])
         });
+        this._myFormFirstLoginWaiter = formBuilder.group({
+            password : new FormControl('', [
+                Validators.compose([
+                    Validators.required,
+                    Validators.minLength(8)
+                ])
+            ]),
+            repeatPassword : new FormControl('', [
+                Validators.required,
+                this.matchPassword
+            ]),
+        });
     }
 
     onNoClick(): void {
@@ -107,6 +124,36 @@ export class LoginDialogComponent {
             .subscribe((data : any) => {
                 data.status ? this.onNoClick() : false;
             });
+    }
+
+    waiterLoginAction(){
+        this._authService.doLoginWaiter(this._username, this._passwordWaiter)
+            .subscribe((data : any)=> {
+                data.status && data.resetPassword ?
+                    (this.loginWaiter = false,
+                        this.recoveryPassword = false,
+                        this.firstLoginWaiter = true,
+
+                        this._passwordWaiter = '') :
+                    data.status && !data.resetPassword ?
+                        this.onNoClick() :
+                        false;
+            });
+    }
+
+    changePasswordAndDoLoginWaiter(){
+        this._authService.changePasswordWaiter(this._username, this._passwordWaiter)
+            .subscribe((data : any)=> {
+                data.status ? this.onNoClick() : false;
+            });
+    }
+
+    matchPassword(input: AbstractControl) : { [key: string]: any }{
+        return !input.root || !(<FormGroup>input.root).controls ?
+            null :
+            input.value !== (<FormGroup>input.root).controls.password.value ?
+                {mismatchedPassword : true} :
+                null;
     }
 
     recoveryPasswordAction(){
